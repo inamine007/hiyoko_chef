@@ -6,5 +6,6 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :recipes, dependent: :destroy
+  has_many :ingredients, dependent: :destroy
   has_one_attached :image
 end
