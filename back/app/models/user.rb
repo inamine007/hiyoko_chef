@@ -7,5 +7,6 @@ class User < ActiveRecord::Base
 
   has_many :recipes, dependent: :destroy
   has_many :ingredients, dependent: :destroy
+  has_many :comments
   has_one_attached :image
 end
