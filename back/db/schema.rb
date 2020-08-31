@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_30_133516) do
+ActiveRecord::Schema.define(version: 2020_08_31_065857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,21 @@ ActiveRecord::Schema.define(version: 2020_08_30_133516) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "ingredients", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "trader", null: false
+    t.string "unit", null: false
+    t.string "unit_used", null: false
+    t.integer "cost", null: false
+    t.decimal "budomari", precision: 3, scale: 2, null: false
+    t.decimal "converted_number", precision: 5, scale: 4, null: false
+    t.decimal "cost_used", precision: 5, scale: 1, null: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_ingredients_on_user_id"
   end
 
   create_table "recipes", force: :cascade do |t|
@@ -66,5 +81,6 @@ ActiveRecord::Schema.define(version: 2020_08_30_133516) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "ingredients", "users"
   add_foreign_key "recipes", "users"
 end
