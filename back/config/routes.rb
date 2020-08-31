@@ -7,5 +7,12 @@ Rails.application.routes.draw do
         resources :comments, only: [:create, :destroy]
     end
     resources :ingredients
-    resources :groups
+    resources :groups do
+        post :add_user, action: :add_user_group, on: :new
+        member do
+            get 'owner'
+            get 'mygroup'
+            post 'remove_user'
+        end
+    end
 end
