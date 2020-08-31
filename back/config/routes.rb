@@ -3,7 +3,9 @@ Rails.application.routes.draw do
         registrations: 'auth/registrations', omniauth_callbacks: 'users/omniauth_callbacks'
     }
   
-    resources :recipes
+    resources :recipes do
+        resources :comments, only: [:create, :destroy]
+    end
     resources :ingredients
     resources :groups
 end
