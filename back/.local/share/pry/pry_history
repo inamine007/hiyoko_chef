@@ -1,0 +1,6 @@
+r = Recipe.find(29)
+r.categories
+exit
+r = Recipe.find(30)
+r.categories
+exit

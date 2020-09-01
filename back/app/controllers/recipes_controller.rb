@@ -9,12 +9,15 @@ class RecipesController < ApplicationController
 
   def show
     recipe_ingredients = @recipe.ingredients.all
-    render json: { status: 'SUCCESS', message: 'loaded recipes', data1: @recipe, data2: recipe_ingredients }
+    recipe_categories = @recipe.categories.all
+    render json: { status: 'SUCCESS', message: 'loaded recipes', data: @recipe, data_ingredients: recipe_ingredients, data_categories: recipe_categories }
   end
 
   def create
     recipe = current_user.recipes.new(recipe_params)
+    category = Category.find(category_params[:category_id])
     if recipe.save
+      recipe.categories << category
       render json: { status: 'SUCCESS', data: recipe }
     else
       render json: { status: 'ERROR', data: recipe.errors.full_messages }
@@ -41,6 +44,11 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:name, :description, :cost, :images, ingredient_recipes_attributes: [:id, :ingredient_id, :amount, :cost_used, :_destroy])
+    params.require(:recipe).permit(:name, :description, :cost, :images,
+    ingredient_recipes_attributes: [:id, :ingredient_id, :amount, :cost_used])
+  end
+
+  def category_params
+    params.permit(:category_id)
   end
 end
