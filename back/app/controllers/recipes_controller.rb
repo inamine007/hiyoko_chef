@@ -8,7 +8,8 @@ class RecipesController < ApplicationController
   end
 
   def show
-    render json: { status: 'SUCCESS', message: 'loaded recipes', data: @recipe }
+    recipe_ingredients = @recipe.ingredients.all
+    render json: { status: 'SUCCESS', message: 'loaded recipes', data1: @recipe, data2: recipe_ingredients }
   end
 
   def create
@@ -40,6 +41,6 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:name, :description, :cost, :images)
+    params.require(:recipe).permit(:name, :description, :cost, :images, ingredient_recipes_attributes: [:id, :ingredient_id, :amount, :cost_used, :_destroy])
   end
 end

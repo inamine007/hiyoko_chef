@@ -26,7 +26,9 @@ class IngredientsController < ApplicationController
   end
 
   def update
+    recipes = @ingredients.recipes.all
     if @ingredients.update(ingredient_params)
+      recipes.update(cost: recipe_params[:cost])
       render json: { status: 'SUCCESS', message: 'Updated the ingredient', data: @ingredients }
     else
       render json: { status: 'ERROR', message: 'Not updated', data: @ingredients.errors }
@@ -41,5 +43,9 @@ class IngredientsController < ApplicationController
 
   def ingredient_params
     params.require(:ingredient).permit(:name, :trader, :cost, :unit, :unit_used, :budomari, :converted_number, :cost_used)
+  end
+
+  def recipe_params
+    params.permit(:cost)
   end
 end
