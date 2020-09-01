@@ -4,3 +4,10 @@ exit
 r = Recipe.find(30)
 r.categories
 exit
+Favorite.all
+r = Recipe.find(30)
+r.favorites
+r.favorites.recipe_id
+r.favorites.pluck(:recipe_id)
+r.favorites(:recipe_id)
+exit
