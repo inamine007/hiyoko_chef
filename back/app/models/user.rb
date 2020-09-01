@@ -6,10 +6,12 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :recipes, dependent: :destroy
+  has_many :favorites, dependent: :destroy
   has_many :ingredients, dependent: :destroy
+  has_many :comments
   has_many :group_users
   has_many :groups, through: :group_users
-  has_many :comments
+  
   # has_one_attached :image
 
   # validates :introduction, length: { maximum: 300 }

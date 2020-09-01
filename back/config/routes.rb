@@ -4,7 +4,8 @@ Rails.application.routes.draw do
     }
   
     resources :recipes do
-        resources :comments, only: [:create, :destroy]
+        resource :comments, only: [:create, :destroy]
+        resources :favorites, only: [:index, :create, :destroy]
     end
     resources :ingredients
     resources :groups do
