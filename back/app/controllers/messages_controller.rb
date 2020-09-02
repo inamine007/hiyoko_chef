@@ -4,6 +4,7 @@ class MessagesController < ApplicationController
         message = @room.messages.build(message_params)
         message.user_id = current_user.id
         if message.save
+            @room.create_notification_message!(current_user, message.id)
             render json: { status: 'SUCCESS', data: message }
         else
             render json: { status: 'ERROR', data: message.errors.full_messages }

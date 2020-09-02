@@ -14,6 +14,7 @@ class RoomsController < ApplicationController
     def create
         room = Room.new(room_params)
         user = User.find(params[:user_id])
+        room.user_id = user.id
         room.users.push(current_user, user)
         if room.save
           render json: { status: 'SUCCESS', data: room }

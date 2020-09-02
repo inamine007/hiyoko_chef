@@ -29,3 +29,25 @@ u.rooms
 r = Room.find(1)
 r.users
 exit
+Recipe.all
+User.all
+Recipe.all
+Comment.all
+Message.all
+Ingredient.all
+u = User.find(6)
+u.recipes
+u.Recipe.create(name: "pasta")
+u.recipes.create(name: "pasta")
+Recipe.all
+u.recipes
+exit
+Recipe.all
+exit
+r = Recipe(30)
+r = Recipe.find(30)
+r.notifications
+exit
+r = Room.find(3)
+r.users
+exit
