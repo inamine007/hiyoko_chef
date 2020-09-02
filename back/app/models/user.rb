@@ -8,7 +8,10 @@ class User < ActiveRecord::Base
   has_many :recipes, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :ingredients, dependent: :destroy
-  has_many :comments
+  has_many :messages, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :entries
+  has_many :rooms, through: :entries
   has_many :group_users
   has_many :groups, through: :group_users
   has_many :relationships
