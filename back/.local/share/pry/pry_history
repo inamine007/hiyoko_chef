@@ -11,3 +11,14 @@ r.favorites.recipe_id
 r.favorites.pluck(:recipe_id)
 r.favorites(:recipe_id)
 exit
+u = User.find(7)
+User.followings
+u.follownigs
+u.followings
+u.follwers
+u.followers
+u = find(6)
+u = User.find(6)
+u.followings
+u.followers
+exit

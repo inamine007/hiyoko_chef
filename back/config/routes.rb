@@ -2,12 +2,13 @@ Rails.application.routes.draw do
     mount_devise_token_auth_for 'User', at: 'auth', controllers: {
         registrations: 'auth/registrations', omniauth_callbacks: 'users/omniauth_callbacks'
     }
-  
+    
     resources :recipes do
         resource :comments, only: [:create, :destroy]
         resources :favorites, only: [:index, :create, :destroy]
     end
     resources :ingredients
+    resources :relationships, only: [:index, :create, :destroy]
     resources :groups do
         post :add_user, action: :add_user_group, on: :new
         member do
