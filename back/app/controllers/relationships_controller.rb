@@ -10,6 +10,7 @@ class RelationshipsController < ApplicationController
     def create
         following = current_user.follow(@user) unless current_user == @user.id
         if following.save
+            @user.create_notification_follow!(current_user)
             render json: { status: 'SUCCESS', data: following }
         else
             render json: { status: 'ERROR', data: following.errors.full_messages }
@@ -28,6 +29,6 @@ class RelationshipsController < ApplicationController
     private
 
     def set_user
-        @user = User.find(params[:follow_id])
+        @user = User.find(params[:user_id])
     end
 end

@@ -5,7 +5,9 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :show] do
         get :whoami, on: :collection
         resource :rooms, only: [:create, :destroy]
+        resource :relationships, only: [:create, :destroy]
     end
+    resources :relationships, only: [:index]
     resources :rooms, only: [:index, :show] do
         resource :messages, only: [:create, :destroy]
     end
@@ -14,7 +16,7 @@ Rails.application.routes.draw do
         resources :favorites, only: [:index, :create, :destroy]
     end
     resources :ingredients
-    resources :relationships, only: [:index, :create, :destroy]
+    resources :notifications, only: :index
     resources :groups do
         post :add_user, action: :add_user_group, on: :new
         member do

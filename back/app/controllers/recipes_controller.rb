@@ -40,7 +40,7 @@ class RecipesController < ApplicationController
   private
 
   def set_recipe
-    @recipe = current_user.recipes.find(params[:id])
+    @recipe = Recipe.find(params[:id])
   end
 
   def recipe_params
