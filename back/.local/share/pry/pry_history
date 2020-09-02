@@ -22,3 +22,10 @@ u = User.find(6)
 u.followings
 u.followers
 exit
+u = User.find(6)
+u.rooms
+u = User.find(7)
+u.rooms
+r = Room.find(1)
+r.users
+exit
