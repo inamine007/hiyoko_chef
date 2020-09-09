@@ -1,34 +1,43 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        hiyoko_chef
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+<div>
+    <button @click="logout">ログアウト</button>
+
+      <!-- Base64形式であればimgタグでそのまま読み込みが可能 -->
+      <img :src="user" alt="post.image">
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  auth: false,
+  data() {
+    return {
+      user: {},
+    }
+  },
+  methods: {
+    logout() {
+      this.$auth.logout();
+      this.$toasted.success('ログアウト！')
+    }
+  },
+  // setPost() {
+  //   this.$axios.$get('/users', {params: {id: this.user.id}})
+  //   .then(response => {
+  //     this.user = response.data
+  //   })
+  //   .catch( error => {
+  //     console.error(error)
+  //   })
+  // }
+  asyncData({ $axios, params }) {
+    return $axios.$get('/users/57')
+      .then((res) => {
+        console.log(res);
+        return { user: res.data_image }
+      })
+  }
+}
 </script>
 
 <style>

@@ -9,7 +9,15 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "nuxt": "^2.14.0"
+    "@nuxtjs/auth": "^4.9.1",
+    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/toast": "^3.3.1",
+    "@nuxtjs/vuetify": "^1.11.2",
+    "node-sass": "^4.14.1",
+    "nuxt": "^2.14.0",
+    "sass-loader": "^10.0.1",
+    "style-loader": "^1.2.1",
+    "vuex-persistedstate": "^3.1.0"
   },
   "devDependencies": {}
 }
