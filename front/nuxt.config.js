@@ -25,6 +25,12 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  watchers: {
+    webpack: {
+      poll: true,
+      ignored: /node_modules/
+    }
+  },
   /*
   ** Global CSS
   */
@@ -35,6 +41,8 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
+    { src: '~/plugins/axios.js'},
+    { src: '~/plugins/localStorage.js'},
   ],
   /*
   ** Auto import components
@@ -50,7 +58,42 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/vuetify',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
+    '@nuxtjs/toast'
   ],
+  axios: {
+    // proxy: true
+    baseURL: 'http://localhost:3000'
+  },
+  proxy: {
+    '/api/': { target: 'http://back:3000', pathRewrite: { '^/api/': '/' } }
+  },
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: false,
+      home: '/'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/auth/sign_in', method: 'post', propertyName: 'token' },
+          logout: false,
+          user: { url: '/users/whoami', method: 'get', propertyName: false }
+        }
+      }
+    }
+  },
+  router: {
+    middleware: ['auth']
+  },
+  toast: {
+    position: 'top-center',
+    duration: 5000
+  },
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/

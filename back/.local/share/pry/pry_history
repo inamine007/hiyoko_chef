@@ -51,3 +51,32 @@ exit
 r = Room.find(3)
 r.users
 exit
+user = User.find(13)
+user = User.find(12)
+user.id
+user.image
+exit
+u = User.find(17)
+u.image
+exit
+u = User.find(17)
+u = User.find(22)
+u = User.find(30)
+u = User.find(25)
+u = User.find(24)
+u.image
+exit
+u = User.find(26)
+u.image
+exit
+u = User.find(28)
+u = User.find(27)
+u.image
+u.image.blob_url
+u.image.blob
+u.image.attached?
+url = url_for(u.image)
+url_for(u.image)
+url_for u.image
+app.url_for u.image
+exit

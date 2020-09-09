@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
@@ -20,10 +21,18 @@ class User < ActiveRecord::Base
   has_many :followers, through: :reverse_of_relationships, source: :user
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
-  
-  # has_one_attached :image
 
-  # validates :introduction, length: { maximum: 300 }
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true
+  validates :introduction, length: { maximum: 300 }
+
+  has_one_attached :image
+  
+
+  def url
+    helpers = Rails.application.routes.url_helpers
+    helpers.rails_representation_url(image.variant({}), only_path: true)
+  end
 
   def follow(other_user)
     unless self == other_user
