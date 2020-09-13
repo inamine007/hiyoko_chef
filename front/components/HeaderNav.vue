@@ -4,7 +4,7 @@
       color="indigo"
       dark
     >
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title><nuxt-link to='/'>Application</nuxt-link></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items
         v-for="(link, i) in links"
@@ -33,3 +33,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+a {
+  color: #fff;
+  text-decoration: none;
+}
+</style>
+

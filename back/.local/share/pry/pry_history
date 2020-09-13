@@ -80,3 +80,11 @@ url_for(u.image)
 url_for u.image
 app.url_for u.image
 exit
+User.find(5)
+User.find(6)
+exit
+u = User.find(5)
+u.delete
+exit
+User.last
+exit
