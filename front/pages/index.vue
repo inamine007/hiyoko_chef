@@ -1,82 +1,35 @@
 <template>
-<div>
-    <button @click="logout">ログアウト</button>
-
-      <!-- Base64形式であればimgタグでそのまま読み込みが可能 -->
-      <img :src="user" alt="post.image">
-  </div>
+  <v-container>
+    <div class="top-title">
+      <h1>
+        There is no love sincerer than the love of food.
+      </h1>
+      <p>ひよこChefは創造的なレシピをシェアする主要なネットワークであり、あなたの料理ライフをサポートします。</p>
+      <v-btn color="warning" dark large to="/sign_up">新規登録</v-btn>
+      <button @click="logout">ログアウト</button>
+    </div>
+  </v-container>
 </template>
 
 <script>
 export default {
-  auth: false,
-  data() {
-    return {
-      user: {},
-    }
-  },
   methods: {
     logout() {
       this.$auth.logout();
-      this.$toasted.success('ログアウト！')
+      this.$toasted.success('ログアウトしました!');
     }
-  },
-  // setPost() {
-  //   this.$axios.$get('/users', {params: {id: this.user.id}})
-  //   .then(response => {
-  //     this.user = response.data
-  //   })
-  //   .catch( error => {
-  //     console.error(error)
-  //   })
-  // }
-  asyncData({ $axios, params }) {
-    return $axios.$get('/users/57')
-      .then((res) => {
-        console.log(res);
-        return { user: res.data_image }
-      })
   }
 }
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+<style lang="scss">
+.top-title {
   text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+  font-size: 1.2rem;
+  margin: 130px;
+  p {
+    font-size: 0.8rem;
+  }
 }
 </style>
+

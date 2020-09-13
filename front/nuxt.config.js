@@ -35,6 +35,7 @@ export default {
   ** Global CSS
   */
   css: [
+    { src: '~/assets/sass/app.scss', lang: 'scss' },
   ],
   /*
   ** Plugins to load before mounting the App
@@ -43,6 +44,7 @@ export default {
   plugins: [
     { src: '~/plugins/axios.js'},
     { src: '~/plugins/localStorage.js'},
+    { src: '~/plugins/vuetify.js' },
   ],
   /*
   ** Auto import components
@@ -61,7 +63,8 @@ export default {
     '@nuxtjs/vuetify',
     '@nuxtjs/axios',
     '@nuxtjs/auth',
-    '@nuxtjs/toast'
+    '@nuxtjs/toast',
+    'nuxt-fontawesome'
   ],
   axios: {
     // proxy: true
@@ -74,7 +77,7 @@ export default {
     redirect: {
       login: '/login',
       logout: '/login',
-      callback: false,
+      callback: '/callback',
       home: '/'
     },
     strategies: {
@@ -84,8 +87,8 @@ export default {
           logout: false,
           user: { url: '/users/whoami', method: 'get', propertyName: false }
         }
-      }
-    }
+      },
+    },
   },
   router: {
     middleware: ['auth']
@@ -93,6 +96,14 @@ export default {
   toast: {
     position: 'top-center',
     duration: 5000
+  },
+  fontawesome: {
+    imports: [
+      {
+        set: '@fortawesome/free-solid-svg-icons',
+        icons: ['fas']
+      }
+    ]
   },
   /*
   ** Build configuration

@@ -186,8 +186,8 @@ module Users
 
     def create_auth_params
       @auth_params = {
-        auth_token: @token.token,
-        client_id:  @token.client,
+        access_token: @token.token,
+        client:  @token.client,
         uid:        @resource.uid,
         expiry:     @token.expiry,
         config:     @config
