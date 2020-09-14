@@ -41,10 +41,10 @@
                 prepend-icon="mdi-lock"
                 type="password"
               ></v-text-field>
-            <v-card-actions>
-              <v-btn type="submit" color="primary">ログイン</v-btn>
-            </v-card-actions>
-          </v-form>
+              <v-card-actions>
+                <v-btn type="submit" color="primary">ログイン</v-btn>
+              </v-card-actions>
+            </v-form>
           </v-card-text>
         </v-card>
       </v-col>
