@@ -71,6 +71,8 @@
                         label="歩留まり"
                         :items="items2"
                         name="budomari"
+                        type="number"
+                        step="0.1"
                       >
                       </v-select>
                     </v-col>
@@ -128,8 +130,13 @@ export default {
       await this.$axios.$post(url, this.form)
       .then((res) => {
         console.log(res);
+        this.$router.replace({path: '/ingredients/'});
+        this.$toasted.success(this.form.name + 'を作成しました！');
+        return res
       }).catch((error) => {
-        console.log(error)
+        console.log(error);
+        this.$toasted.error('作成できませんでした');
+        return error
       })
     }
   }
