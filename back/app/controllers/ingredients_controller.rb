@@ -28,7 +28,7 @@ class IngredientsController < ApplicationController
   def update
     recipes = @ingredients.recipes.all
     if @ingredients.update(ingredient_params)
-      recipes.update(cost: recipe_params[:cost])
+      recipes.update(cost: recipe_params[:cost]) if recipes.present?
       render json: { status: 'SUCCESS', message: 'Updated the ingredient', data: @ingredients }
     else
       render json: { status: 'ERROR', message: 'Not updated', data: @ingredients.errors }
