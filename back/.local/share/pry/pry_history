@@ -88,3 +88,23 @@ u.delete
 exit
 User.last
 exit
+u = User.find(29)
+u.groups
+exit
+u = User.find(29)
+u.groups
+exit
+u = User.find(29)
+u.groups
+exit
+u = User.find(29)
+u.groups
+exit
+u = User.find(29)
+u.class
+u.perse
+u.parse
+u.to_json
+u.parse
+u.class
+exit

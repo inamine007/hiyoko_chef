@@ -32,13 +32,15 @@ class GroupsController < ApplicationController
   end
 
   def index
-    groups = Group.all
+    groups = current_user.groups
     render json: { status: 'SUCCESS', message: 'loaded groups', data: groups }
   end
 
   def show
     group = Group.find(params[:id])
-    render json: { status: 'SUCCESS', message: 'loaded groups', data: group }
+    member_count = group.users.length
+    group_members = group.users
+    render json: { status: 'SUCCESS', message: 'loaded groups', data: group, data_count: member_count, data_members: group_members }
   end
 
   def create
@@ -53,12 +55,12 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    @groups.destroy
+    @group.destroy
     render json: { status: 'SUCCESS', message: 'Deleted the group', data: @groups }
   end
 
   def update
-    if @groups.update(group_params)
+    if @group.update(group_params)
       render json: { status: 'SUCCESS', message: 'Updated the group', data: @groups }
     else
       render json: { status: 'ERROR', message: 'Not updated', data: @groups.errors }
