@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_06_075208) do
+ActiveRecord::Schema.define(version: 2020_09_17_151611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,10 +71,10 @@ ActiveRecord::Schema.define(version: 2020_09_06_075208) do
   end
 
   create_table "group_users", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "group_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.bigint "group_id"
     t.index ["group_id"], name: "index_group_users_on_group_id"
     t.index ["user_id"], name: "index_group_users_on_user_id"
   end
@@ -203,8 +203,8 @@ ActiveRecord::Schema.define(version: 2020_09_06_075208) do
   add_foreign_key "comments", "users"
   add_foreign_key "entries", "rooms"
   add_foreign_key "entries", "users"
-  add_foreign_key "group_users", "groups"
-  add_foreign_key "group_users", "users"
+  add_foreign_key "group_users", "groups", on_delete: :cascade
+  add_foreign_key "group_users", "users", on_delete: :cascade
   add_foreign_key "ingredient_recipes", "ingredients"
   add_foreign_key "ingredient_recipes", "recipes"
   add_foreign_key "ingredients", "users"

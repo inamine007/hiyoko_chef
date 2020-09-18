@@ -9,9 +9,9 @@
       md="8"
     >
       <v-card flat class="mt-16" style="position: relative">
-        <v-card-action>
+        <v-card-actions>
           <v-btn absolute dark right bottom fab color="pink" to="/ingredients/new" nuxt><v-icon>mdi-plus</v-icon></v-btn>
-        </v-card-action>
+        </v-card-actions>
       </v-card>
       <v-text-field
         v-model="search"
@@ -38,7 +38,7 @@
         <v-card>
           <v-card-title>{{ form.name }}</v-card-title>
           <v-card-text>
-            <v-form readonly: true>
+            <v-form :readonly=true>
               <v-text-field
                 v-model="form.trader"
                 label="仕入れ先または店名"
