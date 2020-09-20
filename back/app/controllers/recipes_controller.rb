@@ -15,9 +15,10 @@ class RecipesController < ApplicationController
 
   def create
     recipe = current_user.recipes.new(recipe_params)
-    category = Category.find(category_params[:category_id])
+    # category = Category.find(category_params[:category_id])
     if recipe.save
-      recipe.categories << category
+      # recipe.categories << category
+      # recipe.images.attach(recipe_params[images:[]])
       render json: { status: 'SUCCESS', data: recipe }
     else
       render json: { status: 'ERROR', data: recipe.errors.full_messages }
@@ -44,9 +45,25 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:name, :description, :cost, :images,
+    params.permit(:name, :description, :cost, :time, :serve, images: [],
     ingredient_recipes_attributes: [:id, :ingredient_id, :amount, :cost_used])
   end
+
+  # def form_params
+  #   {
+  #     name: recipe_params[:name],
+  #     description: recipe_params[:description],
+  #     cost: recipe_params[:cost],
+  #     time: recipe_params[:time],
+  #     serve: recipe_params[:serve],
+  #     ingredient_recipes_attributes: [
+  #       # id: recipe_params[:id],
+  #       ingredient_id: recipe_params[:ingredient_id],
+  #       amount: recipe_params[:amount],
+  #       # cost_used: recipe_params[:cost_used]
+  #     ]
+  #   }
+  # end
 
   def category_params
     params.permit(:category_id)

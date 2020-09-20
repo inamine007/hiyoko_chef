@@ -9,6 +9,8 @@ class Recipe < ApplicationRecord
     has_many :categories, through: :recipe_categories
     accepts_nested_attributes_for :ingredient_recipes, allow_destroy: true, update_only: true
     validates :name, presence: true
+    validate :validates_images
+
     has_many_attached :images
 
     def calculate_recipe_cost
@@ -55,6 +57,14 @@ class Recipe < ApplicationRecord
     private
 
     before_save do
-        calculate_recipe_cost
+      calculate_recipe_cost
+    end
+
+    def validates_images
+      if images.attached?
+        if images.count >= 9
+          errors.add(:base, "選択できるファイル数は8つまでです")
+        end
+      end
     end
 end
