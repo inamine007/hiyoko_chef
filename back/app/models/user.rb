@@ -25,14 +25,8 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :introduction, length: { maximum: 300 }
-
-  has_one_attached :image
   
-
-  def url
-    helpers = Rails.application.routes.url_helpers
-    helpers.rails_representation_url(image.variant({}), only_path: true)
-  end
+  has_one_attached :image
 
   def follow(other_user)
     unless self == other_user

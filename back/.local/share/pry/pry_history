@@ -108,3 +108,49 @@ u.to_json
 u.parse
 u.class
 exit
+u = User.find(29)
+u.ingredients
+u.ingredients.all
+Ingredient.all
+exit
+r = Recipe.find(42)
+r.images
+exit
+r = Recipe.find(43)
+r.images.attached?
+r.images
+r.blob_url
+url_for(r.images)
+app.url_for(r.images)
+exit
+r = Recipe.find(43)
+r.images.count
+r = Recipe.find(48)
+r = Recipe.find(45)
+r.images.count
+r = Recipe.find(44)
+r.images.count
+r = Recipe.find(40)
+r.images.count
+r = Recipe.find(41)
+r.images.count
+exit
+r = Recipe.find(48)
+r.images.count
+r = Recipe.find(49)
+r.images.count
+r = Recipe.find(50)
+r.images.count
+r.images
+r.images.blob_url
+r.images.blobs
+exit
+r = Recipe.find(52)
+r.images.count
+exit
+r = Recipe.find(56)
+r.ingredients
+exit
+r = Recipe.find(56)
+r.ingredients
+exit

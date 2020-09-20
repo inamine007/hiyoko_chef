@@ -72,7 +72,7 @@
                   v-model="introduction"
                   rows="2"
                   label="自己紹介"
-                  name="password_confirmation"
+                  name="introduction"
                   prepend-icon="mdi-text"
                   type="text"
                 ></v-textarea>
