@@ -52,8 +52,6 @@
                 @change="onUpload()"
                 ref="file"
                 :dense="true"
-                hint="最大８つまで"
-                :multiple="true"
               ></v-file-input>
               <v-divider class="mt-3"></v-divider>
               <v-card-title>材料</v-card-title>
@@ -142,7 +140,7 @@ export default {
       description: '',
       time: '',
       serve: '',
-      images: [],
+      image: '',
       cols: [{
       trader: '',
       amount: '',
@@ -165,7 +163,7 @@ export default {
   },
   methods: {
     onUpload() {
-      this.images = event.target.files;
+      this.image = event.target.files[0];
     },
     setI(col, index) {
       this.setID.splice(index, 1, col.ingredients.fil.id);
@@ -181,15 +179,12 @@ export default {
       formData.append('description', this.description)
       formData.append('time', this.time)
       formData.append('serve', this.serve)
+      formData.append('image', this.image);
       for (let i = 0; i < this.setID.length && this.setAmount.length; i++) {
         let id = this.setID[i];
         let amount = this.setAmount[i]; 
         formData.append('ingredient_recipes_attributes[][ingredient_id]', id)
         formData.append('ingredient_recipes_attributes[][amount]', amount)
-      }
-      for( let i = 0; i < this.images.length; i++) {
-        let image = this.images[i];
-        formData.append('images[]', image);
       }
       this.$axios.$post(url, formData).then((res) => {
         console.log(res);
@@ -201,7 +196,7 @@ export default {
           var result = messages.join('<br>')
           this.$toasted.error(result)
         } else {
-            this.$router.replace({path: '/groups/'});
+            this.$router.replace({path: '/recipes/'});
             this.$toasted.success(this.name + 'を作成しました！');
         }
       }).catch((error) => {
@@ -212,12 +207,13 @@ export default {
     },
     selected(col) {
       col.ingredients.fil = this.ingredients.filter(item => item.trader === col.trader)
+      console.log(col.ingredients.fil);
       return col.ingredients.fil
     },
     addItems() {
       this.cols.push(this.independentObejct())
     },
-    removeItems(col, target) {
+    removeItems(target) {
       this.cols.splice(target, 1)
       this.setID.splice(target, 1)
       this.setAmount.splice(target, 1)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_19_010722) do
+ActiveRecord::Schema.define(version: 2020_09_20_150900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,10 +91,10 @@ ActiveRecord::Schema.define(version: 2020_09_19_010722) do
   create_table "ingredient_recipes", force: :cascade do |t|
     t.decimal "amount", precision: 5, scale: 1, null: false
     t.decimal "cost_used", precision: 5, scale: 1, null: false
-    t.bigint "ingredient_id"
-    t.bigint "recipe_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "recipe_id"
+    t.bigint "ingredient_id"
     t.index ["ingredient_id"], name: "index_ingredient_recipes_on_ingredient_id"
     t.index ["recipe_id"], name: "index_ingredient_recipes_on_recipe_id"
   end
@@ -144,10 +144,10 @@ ActiveRecord::Schema.define(version: 2020_09_19_010722) do
   end
 
   create_table "recipe_categories", force: :cascade do |t|
-    t.bigint "recipe_id"
-    t.bigint "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "recipe_id"
+    t.bigint "category_id"
     t.index ["category_id"], name: "index_recipe_categories_on_category_id"
     t.index ["recipe_id"], name: "index_recipe_categories_on_recipe_id"
   end
@@ -207,13 +207,13 @@ ActiveRecord::Schema.define(version: 2020_09_19_010722) do
   add_foreign_key "entries", "users"
   add_foreign_key "group_users", "groups", on_delete: :cascade
   add_foreign_key "group_users", "users", on_delete: :cascade
-  add_foreign_key "ingredient_recipes", "ingredients"
-  add_foreign_key "ingredient_recipes", "recipes"
+  add_foreign_key "ingredient_recipes", "ingredients", on_delete: :cascade
+  add_foreign_key "ingredient_recipes", "recipes", on_delete: :cascade
   add_foreign_key "ingredients", "users"
   add_foreign_key "messages", "rooms"
   add_foreign_key "messages", "users"
-  add_foreign_key "recipe_categories", "categories"
-  add_foreign_key "recipe_categories", "recipes"
+  add_foreign_key "recipe_categories", "categories", on_delete: :cascade
+  add_foreign_key "recipe_categories", "recipes", on_delete: :cascade
   add_foreign_key "recipes", "users"
   add_foreign_key "relationships", "users"
   add_foreign_key "relationships", "users", column: "follow_id"
