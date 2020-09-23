@@ -296,18 +296,23 @@ export default {
     },
     editIngredient(editID, editName) {
       this.$axios.$put(url + editID, this.form).then((res) => {
-        console.log(res);
-        this.$axios.$get(url).then((res) => {
-        console.log(res)
-        this.serverDatas = res.data
-        this.$toasted.success(editName + 'を更新しました！');
+        if (res.status == 'ERROR') {
+          this.$toasted.error("入力に誤りがあります")
+        } else {
+          console.log(res);
+          this.$axios.$get(url).then((res) => {
+          console.log(res)
+          this.serverDatas = res.data
+          this.editDialog = false;
+          this.$toasted.success(editName + 'を更新しました！');
+          }).catch((error) => {
+          console.log(error);
+        });
+      }
       }).catch((error) => {
         console.log(error);
-      });
-      }).catch((error) => {
-        console.log(error);
+        this.$toasted.error('更新できませんでした');
       })
-    this.editDialog = false;
     }
   }
 }

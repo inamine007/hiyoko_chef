@@ -154,3 +154,42 @@ exit
 r = Recipe.find(56)
 r.ingredients
 exit
+r = Recipe.find(39)
+r.images
+exit
+r = Recipe.find(39)
+r.images.class
+r.images.attached?
+exit
+r = Recipe.all
+r.destroy
+r.delete
+r.destroy_all
+exit
+Recipe.destroy_all
+exit
+Recipe.destroy_all
+Recipe.all
+Recipe.destroy_all
+Recipe.all
+exit
+r = Recipe.find(61)
+r.ingredients
+r.ingredient_recipes
+exit
+r = Recipe.find(61)
+r.image.url
+r.first.url
+r.url
+app.url_for(r.image)
+exit
+u = User.find(29)
+u.ingredients
+exit
+r = Recipe.find(101)
+r.ingredient
+r.ingredients
+r.ingredients.destroy
+r.ingredients.delete
+r.ingredients.destroy_all
+exit
