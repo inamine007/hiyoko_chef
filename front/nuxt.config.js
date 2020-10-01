@@ -22,7 +22,7 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/ひよこファビコン.png' }
     ]
   },
   watchers: {
@@ -45,6 +45,7 @@ export default {
     { src: '~/plugins/axios.js'},
     { src: '~/plugins/localStorage.js'},
     { src: '~/plugins/vuetify.js' },
+    { src: '~/plugins/vue-chart.js' }
   ],
   /*
   ** Auto import components

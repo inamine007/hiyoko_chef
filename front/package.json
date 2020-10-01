@@ -17,12 +17,14 @@
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/toast": "^3.3.1",
     "@nuxtjs/vuetify": "^1.11.2",
+    "chart.js": "^2.9.3",
     "nanoid": "^2.1.11",
     "node-sass": "^4.14.1",
     "nuxt": "^2.14.0",
     "nuxt-fontawesome": "^0.4.0",
     "sass-loader": "^10.0.1",
     "style-loader": "^1.2.1",
+    "vue-chartjs": "^3.5.1",
     "vuex-persistedstate": "^3.1.0"
   },
   "devDependencies": {}

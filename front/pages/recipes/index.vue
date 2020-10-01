@@ -50,6 +50,7 @@
             <v-icon dense class="mr-1">fas fa-utensils</v-icon>{{ recipe.serve }}人前
             <v-icon dense class="mr-1 ml-4">far fa-clock</v-icon>約{{ recipe.time }}分
             <v-icon dense class="mr-1 ml-4">fas fa-dollar-sign</v-icon>{{ recipe.cost }}円
+            <v-icon dense class="mr-1 ml-4">fas fa-tag</v-icon>{{ recipe.category.name }}
           </v-card-subtitle>
           <v-card-text>
             <v-simple-table class="mb-3">
@@ -113,9 +114,9 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
-              <v-layout justify-center>
+              <v-row justify="center">
               <v-img v-if="selectedImageUrl" :src="selectedImageUrl" max-width="300" max-height="300"></v-img>
-              </v-layout>
+              </v-row>
               <v-file-input
                 accept="image/*, video/*"
                 label="画像または動画"
@@ -123,7 +124,33 @@
                 @change="onUpload()"
                 ref="file"
                 :dense="true"
+                :clearable="false"
               ></v-file-input>
+              <v-row>
+                <v-col cols="6" sm="6">
+                  <v-select
+                    v-model.number="recipe.category.id"
+                    label="カテゴリー"
+                    name="categories"
+                    :items="categories"
+                    item-text="name"
+                    item-value="id"
+                    :dense="true"
+                  ></v-select>
+                    </v-col>
+                    <v-col cols="6" sm="6">
+                  <v-select
+                    v-model.number="recipe.group_id"
+                    label="グループ"
+                    name="groups"
+                    :items="groups"
+                    item-text="name"
+                    item-value="id"
+                    :dense="true"
+                    :clearable="true"
+                  ></v-select>
+                </v-col>
+              </v-row>
               <v-divider class="mt-3"></v-divider>
               <v-card-title>材料</v-card-title>
               <div v-for="(ri, index) in recipe.ingredients" :key="index">
@@ -219,6 +246,11 @@
                 label="作り方"
                 name="description"
               ></v-textarea>
+              <v-switch
+                v-model="recipe.status"
+                label="公開"
+                value="published"
+              ></v-switch>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="green darken-1" text type="submit">更新</v-btn>
@@ -244,8 +276,11 @@
 </template>
 
 <script>
-let url_r = "/recipes/"
+let url = "/recipes/"
+let url_r = "/recipes/confirm"
 let url_i = "/ingredients/"
+let url_c = '/categories'
+let url_g = '/groups'
 export default {
   props: {
     source: String, 
@@ -283,6 +318,8 @@ export default {
       setID: [],
       setAmount: [],
       ingredients: {},
+      categories: [],
+      groups: [],
       amounts: [],
       recipe: {
         name: '',
@@ -291,6 +328,7 @@ export default {
         cost: '',
         description: '',
         image: '',
+        status: '',
         ingredients: [
           {
             name: '',
@@ -312,6 +350,9 @@ export default {
         detail: [{
           amount: [],
           ingredient_id: ''
+        }],
+        category: [{
+          name: ''
         }]
         },
       required: value => !!value || '必ず入力してください',
@@ -330,11 +371,23 @@ export default {
     }).catch((error) => {
       console.log(error);
     });
+    this.$axios.$get(url_c).then((res) => {
+      console.log(res);
+      this.categories = res.data
+    }).catch((error) => {
+      console.log(error);
+    });
+    this.$axios.$get(url_g).then((res) => {
+      console.log(res);
+      this.groups = res.data;
+    }).catch((error) => {
+      console.log(error);
+    });
   },
   methods: {
     onClickEvent(data) {
       this.showDialog = true,
-      this.$axios.$get(url_r + data.id).then((res) => {
+      this.$axios.$get(url + data.id).then((res) => {
         console.log(res);
         this.recipe = res.data;
         this.showImageUrl = res.data.encode_image
@@ -351,7 +404,7 @@ export default {
       this.deleteID = item.id;
     },
     deleteItem (deleteID, deleteName) {
-    this.$axios.$delete(url_r + deleteID).then((res) => {
+    this.$axios.$delete(url + deleteID).then((res) => {
       console.log(res);
         this.$axios.$get(url_r).then((res) => {
         console.log(res);
@@ -369,7 +422,7 @@ export default {
       this.editDialog = true;
       this.editID = item.id;
       this.editName = item.name;
-      this.$axios.$get(url_r + item.id).then((res) => {
+      this.$axios.$get(url + item.id).then((res) => {
         this.recipe = res.data;
         this.selectedImageUrl = res.data.encode_image;
         for (let i in this.recipe.detail) {
@@ -381,6 +434,7 @@ export default {
         for (let i in this.recipe.ingredients) {
           this.setID.push(this.recipe.ingredients[i].id)
         };
+        console.log(this.setAmount)
       }).catch((error) => {
         console.log(error)
       });
@@ -390,8 +444,8 @@ export default {
       let reader = new FileReader()
       reader.readAsDataURL(event.target.files[0]);
       reader.addEventListener('load', () => {
-          this.selectedImageUrl = reader.result;
-        })
+        this.selectedImageUrl = reader.result;
+      })
     },
     setI(ri, index) {
       this.setID.splice(index, 1, ri.fil.id);
@@ -435,6 +489,11 @@ export default {
       formData.append('description', this.recipe.description);
       formData.append('time', this.recipe.time);
       formData.append('serve', this.recipe.serve);
+      formData.append('category_id', this.recipe.category.id);
+      formData.append('group_id', this.recipe.group_id);
+      if (this.recipe.status) {
+        formData.append('status', this.recipe.status);
+      };
       if (this.recipe.image) {
         formData.append('image', this.recipe.image);
       };
@@ -444,17 +503,27 @@ export default {
         formData.append('ingredient_recipes_attributes[][ingredient_id]', id);
         formData.append('ingredient_recipes_attributes[][amount]', amount);
       };
-      this.$axios.$put(url_r + editID, formData).then((res) => {
+      this.$axios.$put(url + editID, formData).then((res) => {
         console.log(res);
         if (res.status == 'ERROR') {
           this.$toasted.error("入力に誤りがあります")
         } else {
           console.log(res);
-          location.reload();
-          this.editDialog = false;
-        };
+          this.$axios.$get(url_r).then((res) => {
+            console.log(res)
+            this.serverDatas = res.data
+            this.$toasted.success(editName + 'を更新しました！');
+            this.setID = []
+            this.setAmount = []
+            this.amounts = []
+            this.editDialog = false;
+            }).catch((error) => {
+            console.log(error);
+          });
+        }
       }).catch((error) => {
         console.log(error);
+        this.$toasted.success('更新できませんでした');
       });
     }
   }

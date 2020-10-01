@@ -4,7 +4,7 @@
       color="indigo"
       dark
     >
-      <v-toolbar-title><nuxt-link to='/'>Application</nuxt-link></v-toolbar-title>
+      <v-toolbar-title><nuxt-link to='/'><img src="@/assets/images/ひよこロゴ.png" alt="ひよこシェフ" width="250" height="200"></nuxt-link></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items
         v-for="(link, i) in links"

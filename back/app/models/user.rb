@@ -22,9 +22,9 @@ class User < ActiveRecord::Base
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
 
-  validates :name, presence: true
+  validates :name, presence: true, length: { maximum: 20 }
   validates :email, presence: true, uniqueness: true
-  validates :introduction, length: { maximum: 300 }
+  validates :introduction, length: { maximum: 70 }
   
   has_one_attached :image
 

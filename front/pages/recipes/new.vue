@@ -53,6 +53,31 @@
                 ref="file"
                 :dense="true"
               ></v-file-input>
+              <v-row>
+                <v-col cols="6" sm="6">
+                  <v-select
+                    v-model.number="categories.id"
+                    label="カテゴリー"
+                    name="categories"
+                    :items="categories"
+                    item-text="name"
+                    item-value="id"
+                    :dense="true"
+                  ></v-select>
+                    </v-col>
+                    <v-col cols="6" sm="6">
+                  <v-select
+                    v-model.number="groups.id"
+                    label="グループ"
+                    name="groups"
+                    :items="groups"
+                    item-text="name"
+                    item-value="id"
+                    :dense="true"
+                    :clearable="true"
+                  ></v-select>
+                </v-col>
+              </v-row>
               <v-divider class="mt-3"></v-divider>
               <v-card-title>材料</v-card-title>
               <div v-for="(col, index) in cols" :key="index">
@@ -114,6 +139,11 @@
                 label="作り方"
                 name="description"
               ></v-textarea>
+              <v-switch
+                v-model="status"
+                label="公開"
+                value="published"
+              ></v-switch>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn type="submit" color="primary">登録</v-btn>
@@ -127,13 +157,17 @@
 </template>
 
 <script>
-let url = '/recipes'
+let url_r = '/recipes'
+let url_i = '/ingredients'
+let url_c = '/categories'
+let url_g = '/groups'
 export default {
   props: {
     source: String, 
   },
   data() {
     return {
+      status: false,
       setID: [],
       setAmount: [],
       name: '',
@@ -141,6 +175,8 @@ export default {
       time: '',
       serve: '',
       image: '',
+      categories: [],
+      groups: [],
       cols: [{
       trader: '',
       amount: '',
@@ -156,10 +192,24 @@ export default {
     }
   },
   asyncData({$axios}) {
-    return $axios.get('/ingredients').then((res) => {
-      console.log(res)
-      return { ingredients: res.data.data }
-    })
+     return $axios.get(url_i).then((res) => {
+        console.log(res)
+        return { ingredients: res.data.data }
+     });
+  },
+  mounted() {
+    this.$axios.$get(url_c).then((res) => {
+      console.log(res);
+      this.categories = res.data
+    }).catch((error) => {
+      console.log(error);
+    });
+    this.$axios.$get(url_g).then((res) => {
+      console.log(res);
+      this.groups = res.data;
+    }).catch((error) => {
+      console.log(error);
+    });
   },
   methods: {
     onUpload() {
@@ -179,6 +229,11 @@ export default {
       formData.append('description', this.description)
       formData.append('time', this.time)
       formData.append('serve', this.serve)
+      formData.append('category_id', this.categories.id)
+      formData.append('group_id', this.groups.id)
+      if (this.status) {
+        formData.append('status', this.status)
+      }
       formData.append('image', this.image);
       for (let i = 0; i < this.setID.length && this.setAmount.length; i++) {
         let id = this.setID[i];
@@ -186,7 +241,7 @@ export default {
         formData.append('ingredient_recipes_attributes[][ingredient_id]', id)
         formData.append('ingredient_recipes_attributes[][amount]', amount)
       }
-      this.$axios.$post(url, formData).then((res) => {
+      this.$axios.$post(url_r, formData).then((res) => {
         console.log(res);
         if (res.status == 'ERROR') {
           var messages = [];

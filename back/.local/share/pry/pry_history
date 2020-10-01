@@ -193,3 +193,254 @@ r.ingredients.destroy
 r.ingredients.delete
 r.ingredients.destroy_all
 exit
+u = User.find(29)
+u.image
+u.image.attached?
+exit
+u = User.find(59)
+u.image.attached?
+u.image.present?
+u = User.find(29)
+u.image.present?
+exit
+Category.all
+Category.create(name: "和食")
+Category.create(name: "フレンチ")
+Category.create(name: "洋食")
+Category.create(name: "エスニック")
+Category.create(name: "家庭料理")
+Category.create(name: "デザート")
+Category.create(name: "スープ")
+exit
+u = User.find(59)
+u.recipes
+u.recipes.categories
+u.categories
+u.recipes.find[0]
+u.recipes[0]
+r = u.recipes[0]
+r.categories
+r = u.recipes[1]
+r.categories
+exit
+u = User.find(59)
+u.recipes.each do |recipe| \
+  put recipe \
+end
+u.recipes.each do |recipe| \
+  p recipe \
+end
+u.recipes.each do |recipe| \
+  p recipe.categories \
+end
+r = u.recipes[1]
+r.class
+r.categories.class
+u.recipes.each do |recipe| \
+  p recipe.categories.class \
+end
+recipes = u.recipes.map do |item| \
+  recipe = item.as_json \
+  recipe['category'] = recipe.categories \
+end
+recipes = u.recipes.map do |item| \
+  item['category'] = item.categories \
+end
+recipes = u.recipes.map do |item| \
+  recipe = item.as_json \
+  recipe['category'] = item.categories \
+end
+r = u.recipes[0]
+r.delete
+recipes = u.recipes.map do |item| \
+  recipe = item.as_json \
+  recipe['category'] = item.categories \
+end
+u.recipes.map do |item| \
+  recipe = item.as_json \
+  recipe['category'] = item.categories \
+end
+recipes[] = u.recipes.map do |item| \
+  recipe = item.as_json \
+  recipe['category'] = item.categories \
+end
+recipes = u.recipes.map do |item| \
+  item.categories \
+end
+recipes
+recipes = u.recipes.map do |item| \
+  item << item.categories \
+end
+recipes = u.recipes.map do |item| \
+  item = item.categories \
+end
+recipes
+recipes = u.recipes.map do |item| \
+  item << item.categories.name \
+end
+exit
+u = User.find(59)
+exit
+u = User.find(59)
+recipes = u.recipes.map do |item| \
+  item.categories \
+end
+recipes.class
+recipes
+r.ingredients
+u.recipes[0]
+r = u.recipes[0]
+r.ingredients
+r.ingredients.class
+exit
+u = User.find(59)
+u.recipe_categories
+u.recipes
+r = u.recipes[0]
+r.recipe_categories
+Recipe_categories
+RecipeCategory
+u.recipes.categories
+u.recipes.each do |recipe| \
+  p recipe.categories \
+end
+cs = u.recipes.map do |recipe| \
+  recipe.categories \
+end
+c
+cs
+cs.class
+cs.to_h
+cs.dup { |v| v[:name] }
+cs.count([:name, 'イタリアン'])
+cs.count([:id, '1'])
+cs[0]
+cs[0].name
+cs[0].id
+exit
+u = User.find(59)
+u.recipes
+r = u.recipes[0]
+r.categories
+c = r.categories.first
+c.name
+cs = u.recipes.map do |recipe| \
+  recipe.categories \
+end
+cs.first
+c = cs.first
+c.name
+c.class
+cs = u.recipes.map do |recipe| \
+  recipe.categories.first \
+end
+cs.count([:name, 'イタリアン'])
+cs.class
+cs.first
+cs.first.name
+cs.count
+cs.name
+cs.id
+cs.each do |c| \
+  p c.name \
+end
+c = cs.map do |c| \
+  c.name \
+end
+c.count([:name, 'イタリアン'])
+c.count([ 'イタリアン'])
+c.count('イタリアン')
+data = {['イタリアン', c.count('イタリアン')], ['中華', c.count('中華')], ['和食', c.count('和食')]}
+data = {['イタリアン' => c.count('イタリアン')], ['中華' => c.count('中華')], ['和食' => c.count('和食')]}
+data = {'イタリアン' => c.count('イタリアン'), '中華' => c.count('中華'), '和食' => c.count('和食')}
+data.class
+data.as_json
+data.class
+data = {['name' => 'イタリアン', 'count' => c.count('イタリアン')], ['name' => '中華', 'count' => c.count('中華')]}
+data = {'name' => 'イタリアン', 'count' => c.count('イタリアン'), 'name' => '中華', 'count' => c.count('中華')}
+data = [['name' => 'イタリアン', 'count' => c.count('イタリアン')], ['name' => '中華', 'count' => c.count('中華')]]
+data.class
+data.each do |d| \
+  p d.name \
+end
+data = {'イタリアン' => c.count('イタリアン'), '中華' => c.count('中華'), '和食' => c.count('和食')}
+data.each do |d| \
+end
+data.each do |key, value| \
+  puts "key = #{key}" \
+  puts "value = #{value}" \
+end
+data.each do |key, value| \
+  puts "value = #{value}" \
+end
+data.each do |key, value| \
+  puts "key = #{key}" \
+end
+c
+data = c.map do |key| \
+  [key, key.count('key')] \
+end
+data = c.map do |key| \
+  [key, key.count(key)] \
+end
+data = c.map do |key| \
+  [key, c.count(key)] \
+end
+data.uniq
+data = c.map do |key| \
+  [key, c.count(key)].uniq \
+end
+exit
+u = User.find(59)
+cs = u.recipes.map |recipe| \
+recipe.categories.first \
+end
+cs = u.recipes.map do |recipe| \
+  recipe.categories.first \
+end
+name = cs.map do |c| \
+  c.name \
+end
+data = c.map do |n| \
+  n => c.count(n) \
+data = c.map do |n| \
+  n, c.count(n) \
+end
+data = c.each do |n| \
+  {n => c.count(n)} \
+end
+data = name.each do |n| \
+  {n => name.count(n)} \
+end
+data = name.each do |n| \
+  puts  {n => name.count(n)} \
+data = name.map do |n| \
+  {n => name.count(n)} \
+end
+name.each do |n| \
+  data << {n: name.count(n)} \
+end
+data
+data = {}
+name.each do |n| \
+  data.merge!(n => name.count(n)) \
+end
+data
+exit
+Category.all
+exit
+u = User.find(29)
+u.recipes
+rs = u.recipes
+rs.destroy_all
+rs
+exit
+u = User.find(29)
+u.image
+u.image.present?
+u.image.attached?
+exit
+u = User.find(29)
+u.followings
+u.followers
+exit
