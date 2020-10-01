@@ -1,5 +1,6 @@
 class Recipe < ApplicationRecord
     belongs_to :user
+    belongs_to :group, optional: true
     has_many :comments, dependent: :destroy
     has_many :favorites, dependent: :destroy
     has_many :notifications, dependent: :destroy
@@ -9,9 +10,9 @@ class Recipe < ApplicationRecord
     has_many :categories, through: :recipe_categories
     accepts_nested_attributes_for :ingredient_recipes, allow_destroy: true, update_only: true
     validates :name, presence: true
-
     has_one_attached :image
-  
+    enum status: { draft: 0, published: 1 }
+    
     def calculate_recipe_cost
         ingredient_recipes.each(&:calculate_cost_used)
         self.cost = ingredient_recipes.map(&:cost_used).sum
