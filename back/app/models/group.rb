@@ -1,5 +1,5 @@
 class Group < ApplicationRecord
-  has_many :recipes
+  has_many :recipes, dependent: :destroy
   has_many :group_users
   has_many :users, through: :group_users
   has_one_attached :image

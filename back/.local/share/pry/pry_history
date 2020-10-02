@@ -444,3 +444,27 @@ u = User.find(29)
 u.followings
 u.followers
 exit
+u = User(59)
+u = User.find(59)
+u.groups
+g = u.groups.find(11)
+u.recipes
+g.recipes
+u.recipes
+exit
+u = User.find(59)
+g = u.groups.find(11)
+g.recipes
+u.recipes
+exit
+u = User.find(59)
+g = u.groups.find(11)
+u.recipes
+exit
+u = User.find(59)
+u.ingredients
+exit
+u = User.find(59)
+g = u.groups.find(11)
+g.recipes
+exit

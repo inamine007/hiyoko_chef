@@ -65,7 +65,7 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    params.permit(:name, :description, :cost, :time, :serve, :image, :status,
+    params.permit(:name, :description, :cost, :time, :serve, :image, :status, :group_id,
     ingredient_recipes_attributes: [:id, :ingredient_id, :amount, :cost_used])
   end
 
