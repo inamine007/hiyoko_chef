@@ -88,7 +88,7 @@ let url_r = "/recipes"
 export default {
   data() {
     return {
-      id: '',
+      id: this.$auth.user.data.id,
       user: {},
       followings: [],
       selectedImageUrl: null,
@@ -106,15 +106,14 @@ export default {
     this.$axios.$get(url).then((res) => {
       console.log(res);
       this.user = res.data;
-      this.id = res.data.id;
       this.selectedImageUrl = res.data.encode_image;
       console.log(this.id)
     }).catch((error) => {
       console.log(error);
     });
-    let url_g = `groups/${this.$auth.user.data.id}/owner`;
-    let url_fi = `users/${this.$auth.user.data.id}/followings`;
-    let url_fe = `users/${this.$auth.user.data.id}/followers`;
+    let url_g = `groups/${this.id}/owner`;
+    let url_fi = `users/${this.id}/followings`;
+    let url_fe = `users/${this.id}/followers`;
     this.$axios.$get(url_gs).then((res) => {
       console.log(res);
       this.groups = res.data;

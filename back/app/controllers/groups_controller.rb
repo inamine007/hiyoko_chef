@@ -7,11 +7,17 @@ class GroupsController < ApplicationController
     @groups = user.groups.where(owner_id: user.id)
     render json: { status: 'SUCCESS', data: @groups }
   end
-  
+
+  def members
+    group = Group.find(params[:id])
+    users = group.users
+    render json: users, each_serializer: UserSerializer
+  end
+
   def mygroup
-    @recipes = @group.recipes.all
-    render json: { status: 'SUCCESS', message: 'loaded recipes', data: @recipes }
-    # @recipes = @group.recipes.page(params[:page]).per(20).recent
+    recipes = @group.recipes.all
+    render json: recipes, each_serializer: RecipeSerializer
+    # render json: { status: 'SUCCESS', message: 'loaded recipes', data: @recipes }
   end
 
   def add_user_group
@@ -39,8 +45,7 @@ class GroupsController < ApplicationController
   def show
     group = Group.find(params[:id])
     member_count = group.users.length
-    group_members = group.users
-    render json: { status: 'SUCCESS', message: 'loaded groups', data: group, data_count: member_count, data_members: group_members }
+    render json: { status: 'SUCCESS', message: 'loaded groups', data: group, data_count: member_count}
   end
 
   def create

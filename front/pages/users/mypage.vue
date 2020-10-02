@@ -141,37 +141,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-p {
-  font-size: 1rem;
-}
-.name {
-  font-weight: bold;
-  color: #000;
-  font-size: 1.5rem;
-}
-.introduction {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  text-align: left;
-}
-.v-application {
-  .box {
-    p {
-      margin-bottom: 0;
-    }
-    .count {
-      color: #000;
-    }
-    .contents {
-      font-size: 0.8rem;
-    }
-  }
-}
-.text {
-  font-size: 1.5rem;
-  color: #000;
-  margin: 10px 0;
-}
-</style>

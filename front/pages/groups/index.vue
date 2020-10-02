@@ -51,9 +51,6 @@
                   <v-list-item-content>
                     <v-list-item-title v-text="item.name"></v-list-item-title>
                   </v-list-item-content>
-                  <!-- <v-list-item-avatar>
-                    <v-img :src="item.avatar"></v-img>
-                  </v-list-item-avatar> -->
                 </v-list-item>
               </v-list>
               <v-divider></v-divider>
@@ -186,15 +183,7 @@ export default {
   },
   methods: {
     onClickEvent(data) {
-      this.showDialog = true,
-      this.$axios.$get(url + data.id).then((res) => {
-        console.log(res);
-        this.form = res.data;
-        this.member_count = res.data_count;
-        this.members = res.data_members;
-      }).catch((error) => {
-        console.log(error);
-      });
+      this.$router.push({path: `/groups/${data.id}`});
     },
     deleteConfirm(item) {
       this.deleteDialog = true;

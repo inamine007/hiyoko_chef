@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     member do
       get 'owner'
       get 'mygroup'
+      get 'members'
       post 'remove_user'
     end
   end
