@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-    before_action :set_recipe, only: [:show, :update, :destroy]
+    before_action :set_recipe, only: [:show, :comments, :update, :destroy]
     before_action :authenticate_user!
 
   def index
@@ -14,6 +14,11 @@ class RecipesController < ApplicationController
     render json: recipes, each_serializer: RecipeSerializer
   end
 
+  def comments
+    comments = @recipe.comments
+    render json: comments, each_serializer: CommentSerializer
+  end
+
   def confirm
     recipes = current_user.recipes
     render json: { status: 'SUCCESS', message: 'loaded recipes', data: recipes }
@@ -24,10 +29,11 @@ class RecipesController < ApplicationController
     recipe['ingredients'] = @recipe.ingredients.all
     recipe['detail'] = @recipe.ingredient_recipes
     recipe['category'] = @recipe.categories.first
+    recipe['uname'] = @recipe.user.name
     img = @recipe.image
-    if img.present?
-      recipe['encode_image'] = encode_base64(img)
-    end
+    uimg = @recipe.user.image
+    recipe['encode_image'] = encode_base64(img) if img.present?
+    recipe['encode_uimage'] = encode_base64(uimg) if uimg.present?
     render json: { status: 'SUCCESS', message: 'loaded recipes', data: recipe }
   end
 
@@ -61,7 +67,7 @@ class RecipesController < ApplicationController
   private
 
   def set_recipe
-    @recipe = current_user.recipes.find(params[:id])
+    @recipe = Recipe.find(params[:id])
   end
 
   def recipe_params

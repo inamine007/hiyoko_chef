@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height">
     <v-row>
-      <v-col xs="12" md="4" sm="12" >
+      <v-col cols="12" md="4">
         <v-card outlined align="center">
           <v-card-text>
             <p class="name">{{ group.name }}</p>
@@ -27,13 +27,13 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col xs="12" md="8" sm="12" >
+      <v-col cols="12" md="8">
         <v-row justify="center">
           <p class="text mt-5">グループレシピ</p>
         </v-row>
         <v-row dense>
           <v-col v-for="recipe in recipes" :key="recipe.id" md="6" xs="12">
-            <v-card outlined max-width="320" class="mx-auto">
+            <v-card outlined max-width="320" class="mx-auto" link :to="{ name: 'recipes-id', params: { id: recipe.rid } }">
               <v-card-title>
                 <v-avatar size='34'>
                   <v-img v-if="recipe.uimage" :src="recipe.uimage"></v-img>
@@ -47,8 +47,8 @@
                 </v-col>
                 <v-col cols="5" class="pa-0">
                   <v-card-actions>
-                    <v-btn icon><v-icon small>fas fa-heart</v-icon>8</v-btn>
-                    <v-btn icon><v-icon small>fas fa-comment-alt</v-icon>10</v-btn>
+                    <v-btn icon><v-icon small>fas fa-heart</v-icon>{{ recipe.favorites.length }}</v-btn>
+                    <v-btn icon><v-icon small>fas fa-comment-alt</v-icon>{{ recipe.comments.length }}</v-btn>
                   </v-card-actions>
                 </v-col>
               </v-row>
@@ -71,6 +71,7 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
+      userID: this.$auth.user.data.id,
       member_count: '',
       group: {},
       recipes: [],
@@ -87,9 +88,7 @@ export default {
     }
   },
   mounted() {
-    let url = `/groups/${this.id}/`
-    let url_g = `/groups/${this.id}/mygroup`
-    let url_u = `groups/${this.id}/members`
+    let url = `/groups/${this.id}/`;
     this.$axios.$get(url).then((res) => {
       console.log(res);
       this.group = res.data;
@@ -97,7 +96,7 @@ export default {
     }).catch((error) => {
       console.log(error);
     });
-    this.$axios.$get(url_g).then((res) => {
+    this.$axios.$get(url + 'mygroup').then((res) => {
       for (let i in res.data) {
         this.listsR.push(res.data[i].attributes)
       };
@@ -106,7 +105,7 @@ export default {
     }).catch((error) => {
       console.log(error);
     });
-    this.$axios.$get(url_u).then((res) => {
+    this.$axios.$get(url + 'members').then((res) => {
       for (let i in res.data) {
         this.listsM.push(res.data[i].attributes)
       };
