@@ -47,10 +47,10 @@
             {{ recipe.name }}
           </v-card-title>
           <v-card-subtitle>
-            <v-icon dense class="mr-1">fas fa-utensils</v-icon>{{ recipe.serve }}人前
-            <v-icon dense class="mr-1 ml-4">far fa-clock</v-icon>約{{ recipe.time }}分
-            <v-icon dense class="mr-1 ml-4">fas fa-dollar-sign</v-icon>{{ recipe.cost }}円
-            <v-icon dense class="mr-1 ml-4">fas fa-tag</v-icon>{{ recipe.category.name }}
+            <v-icon dense class="mr-1" color="black">fas fa-utensils</v-icon>{{ recipe.serve }}人前
+            <v-icon dense class="mr-1 ml-4" color="orange">far fa-clock</v-icon>約{{ recipe.time }}分
+            <v-icon dense class="mr-1 ml-4" color="blue">fas fa-dollar-sign</v-icon>{{ recipe.cost }}円
+            <v-icon dense class="mr-1 ml-4" color="red">fas fa-tag</v-icon>{{ recipe.category.name }}
           </v-card-subtitle>
           <v-card-text>
             <v-simple-table class="mb-3">

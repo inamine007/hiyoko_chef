@@ -6,6 +6,14 @@ class FavoritesController < ApplicationController
         render json: { status: 'SUCCESS', data: user_ids }
     end
 
+    def users
+      favorites = @recipe.favorites
+      user = favorites.map do |favorite|
+        favorite.user
+      end
+      render json: user, each_serializer: UserSerializer
+    end
+
     def create
         favorite = current_user.favorites.create(recipe_id: params[:recipe_id])
         @recipe.create_notification_like!(current_user)
@@ -14,7 +22,7 @@ class FavoritesController < ApplicationController
 
     def destroy
         @favorite.destroy
-        render json: { status: 'SUCCESS', message: 'Deleted the comment', data: @favorite }
+        render json: { status: 'SUCCESS', message: 'Deleted the favorite', data: @favorite }
     end
 
     private

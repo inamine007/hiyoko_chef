@@ -468,3 +468,25 @@ u = User.find(59)
 g = u.groups.find(11)
 g.recipes
 exit
+u = User.find(59)
+u.recipes
+r = u.recipes.first
+r.user
+r.users
+r.user.image
+r.user.image.present?
+r.user.name
+exit
+r = Recipe.find(111)
+r.favorites
+exit
+r = Recipe.find(111)
+r.comments
+exit
+r = Recipe.find(111)
+r.favorites.users
+r.favorites.user
+r.favorites
+r.favorites.first
+r.favorites.first.user
+exit

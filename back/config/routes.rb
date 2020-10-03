@@ -17,9 +17,15 @@ Rails.application.routes.draw do
   end
   resources :recipes do
     get :confirm, on: :collection
-    get :user, on: :member
+    member do
+      get 'user'
+      get 'comments'
+    end
     resource :comments, only: [:create, :destroy]
-    resources :favorites, only: [:index, :create, :destroy]
+    resources :favorites, only: :index do
+      get :users, on: :collection
+    end
+    resource :favorites, only: [:create, :destroy]
   end
   resources :ingredients
   resources :notifications, only: :index
