@@ -11,12 +11,17 @@ Rails.application.routes.draw do
       get 'followers'
     end
   end
-  resources :relationships, only: :index
+  resources :relationships, only: :index do
+    get :recipes, on: :collection
+  end
   resources :rooms, only: [:index, :show] do
       resource :messages, only: [:create, :destroy]
   end
   resources :recipes do
-    get :confirm, on: :collection
+    collection do
+      get 'confirm'
+      get 'search'
+    end
     member do
       get 'user'
       get 'comments'
@@ -30,7 +35,10 @@ Rails.application.routes.draw do
   resources :ingredients
   resources :notifications, only: :index
   resources :categories, only: :index do
-    get :my_count, on: :collection
+    collection do
+      get 'my_count'
+      get 'search'
+    end
     get :user_count, on: :member
   end
   resources :groups do

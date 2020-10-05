@@ -2,8 +2,9 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:followings, :followers]
 
   def index
-    users = User.all
-    render json: { status: 'SUCCESS', data: users }
+    users = User.where('name like ?', "%#{params[:name]}%")
+    render json: users, each_serializer: UserSerializer
+    # render json: { status: 'SUCCESS', data: users }
   end
 
   def show

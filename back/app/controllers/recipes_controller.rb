@@ -5,12 +5,16 @@ class RecipesController < ApplicationController
   def index
     recipes = current_user.recipes.published
     render json: recipes, each_serializer: RecipeSerializer
-    # render json: { status: 'SUCCESS', message: 'loaded recipes', data: recipes }
   end
 
   def user
     user = User.find(params[:id])
     recipes = user.recipes.published
+    render json: recipes, each_serializer: RecipeSerializer
+  end
+
+  def search
+    recipes = Recipe.published.search(recipe_params[:name])
     render json: recipes, each_serializer: RecipeSerializer
   end
 

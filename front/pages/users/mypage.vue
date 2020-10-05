@@ -24,8 +24,8 @@
                 </v-col>
                 <v-col cols="5" class="pa-0">
                   <v-card-actions>
-                    <v-btn icon><v-icon small>fas fa-heart</v-icon>8</v-btn>
-                    <v-btn icon><v-icon small>fas fa-comment-alt</v-icon>10</v-btn>
+                    <v-btn icon><v-icon small>fas fa-heart</v-icon>{{ recipe.favorites.length }}</v-btn>
+                    <v-btn icon><v-icon small>fas fa-comment-alt</v-icon>{{ recipe.comments.length }}</v-btn>
                   </v-card-actions>
                 </v-col>
               </v-row>

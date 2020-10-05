@@ -2,9 +2,15 @@ class RelationshipsController < ApplicationController
     before_action :set_user, only: [:create, :destroy]
 
   def index
-    followings = current_user.followings.all
-    followers = current_user.followers.all
+    followings = current_user.followings
+    followers = current_user.followers
     render json: { status: 'SUCCESS', data_followings: followings, data_followers: followers }
+  end
+
+  def recipes
+    ids = current_user.followings.ids
+    recipes = Recipe.published.where(user_id: ids)
+    render json: recipes, each_serializer: RecipeSerializer
   end
   
   def create

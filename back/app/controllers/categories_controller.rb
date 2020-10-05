@@ -15,6 +15,16 @@ class CategoriesController < ApplicationController
     render json: { status: 'SUCCESS', data: chart_data }
   end
 
+  def search
+    category = Category.find_by(name: params[:name])
+    if category
+      recipes = category.recipes.published
+    else
+      recipes = {}
+    end
+    render json: recipes, each_serializer: RecipeSerializer
+  end
+
   private
 
   def data(user)
