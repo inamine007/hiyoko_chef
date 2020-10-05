@@ -523,7 +523,7 @@ export default {
         }
       }).catch((error) => {
         console.log(error);
-        this.$toasted.success('更新できませんでした');
+        this.$toasted.error('更新できませんでした');
       });
     }
   }

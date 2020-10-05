@@ -490,3 +490,49 @@ r.favorites
 r.favorites.first
 r.favorites.first.user
 exit
+Recipe.all
+Recipe.where('name like ?', '%pa%')
+Recipe.where('name like ?', '%p%')
+exit
+Recipe.where('categories like ?', '%%')
+Recipe.where('categories.name like ?', '%%')
+Recipe.where('category like ?', '%%')
+r = Recipe.find(111)
+r.categories
+Recipe.where('categories.first like ?', '%%')
+c = Category.find(1)
+c.recipes
+c = Category.find(2)
+c.recipes
+c.recipes.published
+exit
+u = User.find_by('name like ?', '%%')
+u = User.where('name like ?', '%%')
+u = User.where('name like ?', '%たかし%')
+u = User.where('name like ?', '%te%')
+u = User.where('name like ?', '%p%')
+exit
+u = User.find(59)
+u.followings
+u.followings.first.recipes
+re = u.followings.map do |follow| \
+  follow.recipes \
+end
+re
+exit
+u = User.find(59)
+re = u.followings.map do |follow| \
+  follow.recipes \
+end
+re.class
+f = u.followings
+f.class
+re.to_h
+re.class
+exit
+u = User.find(59)
+u.followings
+u.followings.ids
+ids = u.followings.ids
+Recipe.where(user_id: ids)
+exit
