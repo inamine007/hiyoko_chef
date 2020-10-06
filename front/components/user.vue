@@ -23,6 +23,7 @@
         <v-card-actions>
           <v-btn v-if="followings.includes(Number(id))" class="mb-5" outlined color="indigo" @click="unfollow">フォロー解除</v-btn>
           <v-btn v-else class="mb-5" outlined color="indigo" @click="follow">フォローする</v-btn>
+          <v-btn v-if="!roomUser.includes(Number(id))" class="mb-5" outlined color="green" @click="room">メッセージ</v-btn>
         </v-card-actions>
       </v-row>
       <v-divider></v-divider>
@@ -34,11 +35,13 @@
 
 <script>
 let url_re = "/relationships"
+let url_ro = "/rooms"
 export default {
   data() {
     return {
       id: this.$route.params.id,
       user: {},
+      roomUser: [],
       followings: [],
       selectedImageUrl: null,
       followings_count: '',
@@ -47,10 +50,8 @@ export default {
     }
   },
   mounted() {
-    let url = `/users/${this.id}`;
+    let url = `/users/${this.id}/`;
     let url_g = `groups/${this.id}/owner`;
-    let url_fi = `users/${this.id}/followings`;
-    let url_fe = `users/${this.id}/followers`;
     this.$axios.$get(url).then((res) => {
       console.log(res);
       this.user = res.data;
@@ -66,13 +67,13 @@ export default {
     }).catch((error) => {
       console.log(error);
     });
-    this.$axios.$get(url_fi).then((res) => {
+    this.$axios.$get(url + 'followings').then((res) => {
       console.log(res);
       this.followings_count = res.data.length;
     }).catch((error) => {
       console.log(error);
     });
-    this.$axios.$get(url_fe).then((res) => {
+    this.$axios.$get(url + 'followers').then((res) => {
       console.log(res);
       this.followers_count = res.data.length;
     }).catch((error) => {
@@ -81,6 +82,13 @@ export default {
     this.$axios.$get(url_g).then((res) => {
       console.log(res);
       this.groups_count = res.data.length;
+    }).catch((error) => {
+      console.log(error);
+    });
+    this.$axios.$get(url_ro).then((res) => {
+      for (let i in res.data) {
+        this.roomUser.push(res.data[i].user_id)
+      };
     }).catch((error) => {
       console.log(error);
     });
@@ -110,6 +118,16 @@ export default {
         this.$toasted.success(this.user.name + 'のフォローを解除しました！')
       }).catch((error) => {
         console.log(res);
+      });
+    },
+    room() {
+      this.$axios.$post(url_ro, {
+        user_id: this.id
+      }).then((res) => {
+        console.log(res);
+        this.$router.replace({path: `/rooms/${res.data.id}`});
+      }).catch((error) => {
+        console.log(error);
       });
     }
   }

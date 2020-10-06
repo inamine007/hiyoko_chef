@@ -9,7 +9,7 @@ class RelationshipsController < ApplicationController
 
   def recipes
     ids = current_user.followings.ids
-    recipes = Recipe.published.where(user_id: ids)
+    recipes = Recipe.published.where(user_id: ids).recent
     render json: recipes, each_serializer: RecipeSerializer
   end
   
