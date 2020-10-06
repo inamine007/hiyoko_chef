@@ -3,4 +3,5 @@ class ApplicationRecord < ActiveRecord::Base
   scope :search, ->(params) do
     where("name LIKE ?", "%#{params}%")
   end
+  scope :recent, -> { order(created_at: :desc) }
 end

@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   }
   resources :users, only: [:index, :show] do
     get :whoami, on: :collection
-    resource :rooms, only: [:create, :destroy]
     resource :relationships, only: [:create, :destroy]
     member do
       get 'followings'
@@ -14,8 +13,8 @@ Rails.application.routes.draw do
   resources :relationships, only: :index do
     get :recipes, on: :collection
   end
-  resources :rooms, only: [:index, :show] do
-      resource :messages, only: [:create, :destroy]
+  resources :rooms do
+    resources :messages, only: [:index, :create, :destroy]
   end
   resources :recipes do
     collection do

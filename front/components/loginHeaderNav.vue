@@ -66,6 +66,22 @@
       <v-spacer></v-spacer>
       <v-menu left bottom>
         <template v-slot:activator="{ on, attrs }">
+           <v-btn
+            icon
+            v-bind="attrs"
+            v-on="on"
+          ><v-icon>fas fa-location-arrow</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item v-for="(item, index) in rooms" :key="index" @click="link(item)">
+            <v-list-item-title>{{ item.name }}</v-list-item-title>
+          </v-list-item>
+          <v-divider></v-divider>
+        </v-list>
+      </v-menu>
+      <v-menu left bottom>
+        <template v-slot:activator="{ on, attrs }">
           <v-btn
             icon
             v-bind="attrs"
@@ -100,6 +116,7 @@
 
 <script>
 let url = '/auth/'
+let url_r = '/rooms/'
 export default {
   props: {
     source: String,
@@ -107,9 +124,18 @@ export default {
   data() {
     return {
       drawer: null,
-      deleteDialog: false
+      deleteDialog: false,
+      rooms: {}
     }
-  },      
+  },
+  mounted() {
+    this.$axios.$get(url_r).then((res) => {
+      console.log(res);
+      this.rooms = res.data
+    }).catch((error) => {
+      console.log(error);
+    });
+  },
   methods: {
     logout() {
       this.$auth.logout();
@@ -124,6 +150,9 @@ export default {
       }).catch((error) => {
         console.log(error);
       });
+    },
+    link(item) {
+      this.$router.replace({path: '/rooms/' + item.id});
     }
   }
 }

@@ -536,3 +536,15 @@ u.followings.ids
 ids = u.followings.ids
 Recipe.where(user_id: ids)
 exit
+m = Message.find(10)
+m.user
+exit
+u = User.find(59)
+u.entries
+exit
+u = User.find(59)
+u.rooms
+exit
+u = User.find(59)
+u.rooms
+exit
