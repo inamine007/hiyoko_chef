@@ -2,7 +2,7 @@
   <v-container class="fill-height">
     <v-row justify="center">
       <v-col cols="12" md="8" sm="8">
-        <p class="text mt-5">ユーザー一覧</p>
+        <div class="text mt-5">ユーザー一覧</div>
         <v-form @submit.prevent="searchUser">
           <v-text-field
             solo

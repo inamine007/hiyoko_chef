@@ -1,17 +1,8 @@
 <template>
-  <v-row
-    align="center"
-    justify="center"
-  >
-    <v-col
-      cols="12"
-      sm="8"
-      md="8"
-    >
+  <v-row align="center" justify="center">
+    <v-col cols="12" sm="8" md="8">
       <v-card flat class="mt-16" style="position: relative">
-        <v-card-actions>
-          <v-btn absolute dark right bottom fab color="pink" to="/recipes/new" nuxt><v-icon>mdi-plus</v-icon></v-btn>
-        </v-card-actions>
+        <v-btn absolute dark right bottom fab color="pink" to="/recipes/new" nuxt><v-icon>mdi-plus</v-icon></v-btn>
       </v-card>
       <v-text-field
         v-model="search"
@@ -34,15 +25,14 @@
         </template>
       </v-data-table>
       <v-dialog v-model="showDialog" persistent max-width="640">
-        <v-card
-          class="mx-auto"
-        >
+        <v-card class="mx-auto">
           <v-img
             v-if="showImageUrl" 
             :src="showImageUrl"
             max-width="640"
             max-height="480"
           ></v-img>
+          <div class="date">作成:{{ recipe.created }}</div>
           <v-card-title class="mb-3">
             {{ recipe.name }}
           </v-card-title>

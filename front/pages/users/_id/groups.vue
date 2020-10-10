@@ -7,7 +7,7 @@
       </v-col>
       <v-col cols="12" md="8">
         <v-row justify="center">
-          <p class="text mt-5">オーナーグループ</p>
+          <div class="text mt-5">オーナーグループ</div>
         </v-row>
         <v-card max-width="500" class="mx-auto" v-for="(item, index) in groups" :key="index">
           <v-card-title>

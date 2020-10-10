@@ -3,6 +3,7 @@ class Room < ApplicationRecord
   has_many :notifications, dependent: :destroy
   has_many :entries, dependent: :destroy
   has_many :users, through: :entries
+  validates :name, presence: true, length: { maximum: 20 }
 
   def create_notification_message!(current_user, message_id)
     temp_ids = Message.select(:user_id).where(room_id: id).where.not(user_id: current_user.id).distinct

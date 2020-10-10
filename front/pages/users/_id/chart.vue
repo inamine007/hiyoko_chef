@@ -10,14 +10,15 @@
           <v-row justify="center">
             <v-card-title>よく作るジャンル</v-card-title>
           </v-row>
-          <doughnut-chart :chart-data="chartData" :options="chartOptions"></doughnut-chart>
+          <doughnut-chart v-if="chartDataValues.length !== 0" :chart-data="chartData" :options="chartOptions"></doughnut-chart>
         </v-card>
         <v-row justify="center">
-          <p class="text mt-5">公開レシピ</p>
+          <div class="text mt-5">公開レシピ</div>
         </v-row>
         <v-row dense>
-          <v-col v-for="recipe in recipes" :key="recipe.id" md="6" xs="12">
-            <v-card outlined max-width="320" class="mx-auto">
+          <div v-if="recipes.length === 0" class="nothing">公開レシピはありません</div>
+          <v-col v-else v-for="recipe in recipes" :key="recipe.id" md="6" xs="12">
+            <v-card outlined max-width="320" class="mx-auto" link :to="{ name: 'recipes-id', params: { id: recipe.rid } }">
               <v-img :src='recipe.image' height="320"></v-img>
               <v-row>
                 <v-col cols="7" class="pa-0">

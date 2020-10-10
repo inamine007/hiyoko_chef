@@ -2,7 +2,7 @@
   <v-container class="fill-height">
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <p class="text mt-5">レシピ一覧</p>
+        <div class="text mt-5">レシピ一覧</div>
         <v-form>
           <v-text-field
             solo

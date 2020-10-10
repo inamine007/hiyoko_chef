@@ -8,7 +8,10 @@ class IngredientsController < ApplicationController
   end
 
   def show
-    render json: { status: 'SUCCESS', message: 'loaded ingredients', data: @ingredients }
+    ingredient = @ingredient.as_json
+    ingredient['created'] = @ingredient.created_at.strftime("%Y-%m-%d %H:%M")
+    ingredient['updated'] = @ingredient.updated_at.strftime("%Y-%m-%d %H:%M")
+    render json: { status: 'SUCCESS', message: 'loaded ingredients', data: ingredient }
   end
 
   def create
@@ -21,24 +24,24 @@ class IngredientsController < ApplicationController
   end
 
   def destroy
-    @ingredients.destroy
-    render json: { status: 'SUCCESS', message: 'Deleted the ingredient', data: @ingredients }
+    @ingredient.destroy
+    render json: { status: 'SUCCESS', message: 'Deleted the ingredient', data: @ingredient }
   end
 
   def update
-    recipes = @ingredients.recipes.all
-    if @ingredients.update(ingredient_params)
+    recipes = @ingredient.recipes
+    if @ingredient.update(ingredient_params)
       recipes.update(cost: recipe_params[:cost]) if recipes.present?
-      render json: { status: 'SUCCESS', message: 'Updated the ingredient', data: @ingredients }
+      render json: { status: 'SUCCESS', message: 'Updated the ingredient', data: @ingredient }
     else
-      render json: { status: 'ERROR', message: 'Not updated', data: @ingredients.errors }
+      render json: { status: 'ERROR', message: 'Not updated', data: @ingredient.errors }
     end
   end
 
   private
 
   def set_ingredient
-    @ingredients = current_user.ingredients.find(params[:id])
+    @ingredient = current_user.ingredients.find(params[:id])
   end
 
   def ingredient_params

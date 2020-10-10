@@ -1,17 +1,8 @@
 <template>
-  <v-row
-    align="center"
-    justify="center"
-  >
-    <v-col
-      cols="12"
-      sm="8"
-      md="8"
-    >
+  <v-row align="center" justify="center">
+    <v-col cols="12" sm="8" md="8">
       <v-card flat class="mt-16" style="position: relative">
-        <v-card-actions>
-          <v-btn absolute dark right bottom fab color="pink" to="/ingredients/new" nuxt><v-icon>mdi-plus</v-icon></v-btn>
-        </v-card-actions>
+        <v-btn absolute dark right bottom fab color="pink" to="/ingredients/new" nuxt><v-icon>mdi-plus</v-icon></v-btn>
       </v-card>
       <v-text-field
         v-model="search"
@@ -33,7 +24,6 @@
           <v-icon @click.stop="deleteConfirm(item)">fas fa-trash</v-icon>
         </template>
       </v-data-table>
-      
       <v-dialog v-model="showDialog" persistent max-width="640">
         <v-card>
           <v-card-title>{{ form.name }}</v-card-title>
@@ -42,24 +32,21 @@
               <v-text-field
                 v-model="form.trader"
                 label="仕入れ先または店名"
-              >
-              </v-text-field>
+              ></v-text-field>
               <v-row>
                 <v-col cols="12" sm="6">
                   <v-text-field
                     v-model.number="form.cost"
                     label="価格"
                     suffix="円"
-                  >
-                  </v-text-field>
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-text-field
                     v-model.number="form.cost_used"
                     label="使用原価"
                     suffix="円"
-                  >
-                  </v-text-field>
+                  ></v-text-field>
                 </v-col>
               </v-row>
               <v-row>
@@ -67,15 +54,13 @@
                   <v-text-field
                     v-model="form.unit"
                     label="仕入れ単位"
-                  >
-                  </v-text-field>
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-text-field
                     v-model="form.unit_used"
                     label="使用単位"
-                  >
-                  </v-text-field>
+                  ></v-text-field>
                 </v-col>
               </v-row>
               <v-row>
@@ -83,17 +68,17 @@
                   <v-text-field
                     v-model.number="form.budomari"
                     label="歩留まり"
-                  >
-                  </v-text-field>
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-text-field
                     v-model.number="form.converted_number"
                     label="換算数"
-                  >
-                  </v-text-field>
+                  ></v-text-field>
                 </v-col>
               </v-row>
+              <div class="date">作成:{{ form.created }}</div>
+              <div class="date">更新:{{ form.updated }}</div>
               <v-divider></v-divider>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -113,15 +98,13 @@
                 label="食材名"
                 :rules="[required]"
                 name="name"
-              >
-              </v-text-field>
+              ></v-text-field>
               <v-text-field
                 v-model="form.trader"
                 label="仕入れ先または店名"
                 :rules="[required]"
                 name="trader"
-              >
-              </v-text-field>
+              ></v-text-field>
               <v-text-field
                 v-model.number="form.cost"
                 label="価格"
@@ -130,8 +113,7 @@
                 type="number"
                 @keydown.69.prevent
                 :rules="[required]"
-              >
-              </v-text-field>
+              ></v-text-field>
               <v-row>
                 <v-col cols="12" sm="6">
                   <v-select
@@ -139,8 +121,7 @@
                     :items="items"
                     label="仕入れ単位"
                     name="unit"
-                  >
-                  </v-select>
+                  ></v-select>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-select
@@ -148,8 +129,7 @@
                     label="使用単位"
                     :items="items"
                     name="unit_used"
-                  >
-                  </v-select>
+                  ></v-select>
                 </v-col>
               </v-row>
               <v-row>
@@ -159,8 +139,7 @@
                     label="歩留まり"
                     :items="items2"
                     name="budomari"
-                  >
-                  </v-select>
+                  ></v-select>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-select
@@ -171,8 +150,7 @@
                     :items="items3"
                     hint="Kg → g = 0.001, L → ml(cc) = 0.001, 100g → g = 0.01, 本 → 本 = 1"
                     persistent-hint
-                  >
-                  </v-select>
+                  ></v-select>
                 </v-col>
               </v-row>
               <v-divider></v-divider>

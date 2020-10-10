@@ -4,20 +4,20 @@
       <v-img v-if="selectedImageUrl" :src="selectedImageUrl"></v-img>
     </v-avatar>
     <v-card-text>
-      <p class="name">{{ user.name }}</p>
-      <p class="email">{{ user.email }}</p>
+      <div class="name">{{ user.name }}</div>
+      <div class="email">{{ user.email }}</div>
       <v-row wrap class="mb-0 box">
         <v-col cols="4">
-          <p class="count">{{ groups_count }}</p>
-          <nuxt-link :to="{ name: 'users-id-groups', params: { id: id } }"><p class="contents">グループ</p></nuxt-link>
+          <div class="count">{{ groups_count }}</div>
+          <nuxt-link :to="{ name: 'users-id-groups', params: { id: id } }"><div class="contents">グループ</div></nuxt-link>
         </v-col>
         <v-col cols="4">
-          <p class="count">{{ followers_count }}</p>
-          <nuxt-link :to="{ name: 'users-id-followers', params: { id: id } }"><p class="contents">フォロワー</p></nuxt-link>
+          <div class="count">{{ followers_count }}</div>
+          <nuxt-link :to="{ name: 'users-id-followers', params: { id: id } }"><div class="contents">フォロワー</div></nuxt-link>
         </v-col>
         <v-col cols="4">
-          <p class="count">{{ followings_count }}</p>
-          <nuxt-link :to="{ name: 'users-id-followings', params: { id: id } }"><p class="contents">お気に入り</p></nuxt-link>
+          <div class="count">{{ followings_count }}</div>
+          <nuxt-link :to="{ name: 'users-id-followings', params: { id: id } }"><div class="contents">お気に入り</div></nuxt-link>
         </v-col>
       </v-row>
       <v-row justify="center">
@@ -27,7 +27,7 @@
       </v-row>
       <v-divider></v-divider>
       <div class="text">自己紹介</div>
-      <p class="introduction">{{ user.introduction }}</p>
+      <div class="introduction">{{ user.introduction }}</div>
     </v-card-text>
     <v-dialog v-model="editDialog" persistent max-width="640">
       <v-card>
@@ -99,7 +99,6 @@ export default {
       required: value => !!value || '必ず入力してください',
       introduction_length: value => value.length <= 70 || '70文字以内で入力してください',
       name_length: value => value.length <= 20 || '20文字以内で入力してください'
-
     }
   },
   mounted() {

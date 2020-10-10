@@ -1,3 +1,4 @@
+
 html {
   font-family:
     'Source Sans Pro',
@@ -15,6 +16,10 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+}
+
+.body {
+  background-color: #ffe0bd;
 }
   
 *,
@@ -60,4 +65,20 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 input[type="number"] {
   -moz-appearance:textfield;
+}
+
+.nothing {
+  font-size: 1.5rem;
+  color: #de4d4d;
+  margin: 100px auto;
+}
+
+.v-list-item__title.wrap-text,
+.v-list-item__subtitle.wrap-text{
+  word-break: break-all;
+  white-space: normal;
+}
+
+.date {
+  font-size: 0.8rem;
 }

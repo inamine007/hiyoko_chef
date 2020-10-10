@@ -548,3 +548,23 @@ exit
 u = User.find(59)
 u.rooms
 exit
+u = User.find(59)
+r = u.rooms.first
+r.notifications
+exit
+u = User.find(29)
+r = u.rooms.first
+exit
+n = Notification.find(39)
+n = Notification.first
+n.recipes
+n.recipe
+exit
+n = Notification.first
+Recipe.find(n.recipe_id).name
+n.recipe_id
+n.room_id
+Room.find(n.room_id).name
+exit
+Time.zone.name
+exit

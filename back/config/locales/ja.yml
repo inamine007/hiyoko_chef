@@ -1,0 +1,56 @@
+ja:
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "バリデーションに失敗しました: %{errors}"
+        restrict_dependent_destroy:
+          has_one: "%{record}が存在しているので削除できません"
+          has_many: "%{record}が存在しているので削除できません"
+    models:
+      user: ユーザー
+      recipe: レシピ
+      comment: コメント
+      category: カテゴリー
+      ingredient: 食材
+      message: メッセージ
+      room: ルーム
+    attributes:
+      user:
+        id: ID
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード(確認)
+        introduction: 自己紹介
+        image: 画像 
+      recipe:
+        id: ID
+        name: レシピ名
+        introduction: 作り方
+        images: 画像
+      group:
+        id: ID
+        name: 名前
+        password: パスワード
+        introduction: グループ紹介文
+      category:
+        name: カテゴリー名
+      ingredient:
+        id: ID
+        name: 食材名
+        trader: 仕入れ先
+        unit: 仕入れ単位
+        cost: 価格
+        unit_used: 使用単位
+        budomari: 歩留まり
+        converted_number: 換算数
+      message:
+        content: メッセージ
+      room:
+        name: ルーム名
+      comment:
+        content: コメント
+    
