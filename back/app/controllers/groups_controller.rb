@@ -44,8 +44,9 @@ class GroupsController < ApplicationController
 
   def show
     group = Group.find(params[:id])
+    members = group.users
     member_count = group.users.length
-    render json: { status: 'SUCCESS', message: 'loaded groups', data: group, data_count: member_count}
+    render json: { status: 'SUCCESS', message: 'loaded groups', data: group, data_count: member_count, data_members: members}
   end
 
   def create

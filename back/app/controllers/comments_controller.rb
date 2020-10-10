@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
         comment = @recipe.comments.build(comment_params)
         comment.user_id = current_user.id
         if comment.save
-            @recipe.create_notification_comment!(current_user, comment.id)
+            # @recipe.create_notification_comment!(current_user, comment.id)
             render json: { status: 'SUCCESS', data: comment }
         else
             render json: { status: 'ERROR', data: comment.errors.full_messages }

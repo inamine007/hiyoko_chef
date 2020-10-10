@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   before_action :set_room
 
   def index
-    messages = @room.messages.recent
+    messages = @room.messages
     render json: messages, each_serializer: MessageSerializer
   end
 

@@ -12,7 +12,7 @@
           <doughnut-chart :chart-data="chartData" :options="chartOptions"></doughnut-chart>
         </v-card>
         <v-row justify="center">
-          <p class="text mt-5">公開レシピ</p>
+          <div class="text mt-5">公開レシピ</div>
         </v-row>
         <v-row dense>
           <v-col v-for="recipe in recipes" :key="recipe.id" md="6" xs="12">

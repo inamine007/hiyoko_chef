@@ -1,11 +1,9 @@
 <template>
-	<v-footer
-      color="indigo"
-      app
-    >
-      <span class="white--text">&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+	<v-footer color="green lighten-1" app>
+    <span class="white--text">&copy; {{ new Date().getFullYear() }} inamine</span>
+  </v-footer>
 </template>
+
 <script>
 	export default {};
 </script>

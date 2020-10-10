@@ -7,7 +7,7 @@
       </v-col>
       <v-col cols="12" md="8">
         <v-row justify="center">
-          <p class="text mt-5">フォロワー</p>
+          <div class="text mt-5">フォロワー</div>
         </v-row>
         <v-card max-width="500" class="mx-auto">
           <v-list>

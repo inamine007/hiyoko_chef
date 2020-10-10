@@ -11,5 +11,6 @@ export default {
     LoginTop,
     Top
   },
+  auth: false
 }
 </script>

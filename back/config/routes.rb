@@ -32,7 +32,12 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy]
   end
   resources :ingredients
-  resources :notifications, only: :index
+  resources :notifications, only: :index do
+    collection do
+      get 'checked'
+      get 'destroy_all'
+    end
+  end
   resources :categories, only: :index do
     collection do
       get 'my_count'

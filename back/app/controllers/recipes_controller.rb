@@ -30,10 +30,11 @@ class RecipesController < ApplicationController
 
   def show
     recipe = @recipe.as_json
-    recipe['ingredients'] = @recipe.ingredients.all
+    recipe['ingredients'] = @recipe.ingredients
     recipe['detail'] = @recipe.ingredient_recipes
     recipe['category'] = @recipe.categories.first
     recipe['uname'] = @recipe.user.name
+    recipe['created'] = @recipe.created_at.strftime("%Y-%m-%d %H:%M")
     img = @recipe.image
     uimg = @recipe.user.image
     recipe['encode_image'] = encode_base64(img) if img.present?
@@ -43,7 +44,6 @@ class RecipesController < ApplicationController
 
   def create
     recipe = current_user.recipes.new(recipe_params)
-
     category = Category.find(category_params[:category_id])
     if recipe.save
       recipe.categories << category

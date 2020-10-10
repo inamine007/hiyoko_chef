@@ -1,17 +1,8 @@
 <template>
-  <v-row
-    align="center"
-    justify="center"
-  >
-    <v-col
-      cols="12"
-      sm="8"
-      md="8"
-    >
+  <v-row align="center" justify="center">
+    <v-col cols="12" sm="8" md="8">
       <v-card flat class="mt-16" style="position: relative">
-        <v-card-actions>
-          <v-btn absolute dark right bottom fab color="pink" to="/groups/new" nuxt><v-icon>mdi-plus</v-icon></v-btn>
-        </v-card-actions>
+        <v-btn absolute dark right bottom fab color="pink" to="/groups/new" nuxt><v-icon>mdi-plus</v-icon></v-btn>        
       </v-card>
       <v-text-field
         v-model="search"
@@ -35,7 +26,6 @@
           <v-icon v-else @click.stop="removeConfirm(item)">fas fa-sign-out-alt</v-icon>
         </template>
       </v-data-table>
-      
       <v-dialog v-model="showDialog" persistent max-width="640">
         <v-card>
           <v-card-title>{{ form.name }}<v-spacer></v-spacer><v-icon class="mr-2">fas fa-users</v-icon>{{ member_count }}</v-card-title>
@@ -44,8 +34,7 @@
               <v-textarea
                 v-model="form.introduction"
                 label="説明文"
-              >
-              </v-textarea>
+              ></v-textarea>
               <v-list>
                 <v-list-item v-for="item in members" :key="item.id">
                   <v-list-item-content>
@@ -64,36 +53,33 @@
       </v-dialog>
       <v-dialog v-model="editDialog" persistent max-width="640">
         <v-card>
-            <v-card-title>グループ編集</v-card-title>
-            <v-card-text>
-              <v-form @submit.prevent="editGroup(editID, editName)">
-                <v-text-field
-                  v-model="form.name"
-                  label="グループ名"
-                  :rules="[required, name_length]"
-                  name="name"
-                >
-                </v-text-field>
-                <v-textarea
-                  v-model="form.introduction"
-                  label="説明文"
-                  name="introduction"
-                  counter="140"
-                  rows="3"
-                  :rules="[introduction_length]"
-                >
-                </v-textarea>
-                <v-text-field
-                  v-model.number="form.password"
-                  label="パスワード"
-                  name="password"
-                  type="number"
-                  prepend-icon="mdi-lock"
-                  @keydown.69.prevent
-                  :rules="[required, password_length]"
-                  hint="4桁の数字"
-                >
-                </v-text-field>
+          <v-card-title>グループ編集</v-card-title>
+          <v-card-text>
+            <v-form @submit.prevent="editGroup(editID, editName)">
+              <v-text-field
+                v-model="form.name"
+                label="グループ名"
+                :rules="[required, name_length]"
+                name="name"
+              ></v-text-field>
+              <v-textarea
+                v-model="form.introduction"
+                label="説明文"
+                name="introduction"
+                counter="140"
+                rows="3"
+                :rules="[introduction_length]"
+              ></v-textarea>
+              <v-text-field
+                v-model.number="form.password"
+                label="パスワード"
+                name="password"
+                type="number"
+                prepend-icon="mdi-lock"
+                @keydown.69.prevent
+                :rules="[required, password_length]"
+                hint="4桁の数字"
+              ></v-text-field>
               <v-divider></v-divider>
               <v-card-actions>
                 <v-spacer></v-spacer>

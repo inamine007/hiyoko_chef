@@ -4,10 +4,12 @@
       <v-col cols="12" sm="8" md="8">
         <v-card class="mx-auto">
           <v-card-title>
-            <v-avatar size='34'>
+            <nuxt-link :to="{ name: 'users-id-chart', params: { id: recipe.user_id } }">
+            <v-avatar size='34' class="mr-2">
               <v-img v-if="recipe.encode_uimage" :src="recipe.encode_uimage"></v-img>
             </v-avatar>
             {{ recipe.uname }}
+            </nuxt-link>
           </v-card-title>
           <v-img
             v-if="recipe.encode_image" 
@@ -64,8 +66,8 @@
                   <v-img :src="item.uimage"></v-img>
                 </v-list-item-avatar>
                 <v-list-item-content align="left">
-                  <v-list-item-title v-text="item.user.name"></v-list-item-title>
-                  <div v-text="item.content"></div>
+                  <v-list-item-subtitle>{{ item.user.name }}<br>{{ item.created }}</v-list-item-subtitle>
+                  <v-list-item-title v-text="item.content" class="wrap-text"></v-list-item-title>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn v-if="item.user.id == userID" color="red darken-1" small text @click="deleteConfirm(item)">消す</v-btn>

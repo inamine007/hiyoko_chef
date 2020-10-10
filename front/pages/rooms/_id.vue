@@ -18,11 +18,12 @@
         </v-form>
         <v-card class="mx-auto">
           <v-card-text>
-            <v-list>
+            <v-list id="scroll">
               <v-list-item v-for="(item, index) in messages" :key="index" class="mb-8">
                 <v-list-item v-if="item.uid == userID" style="background-color: #a6ce39; border-radius: 5px;">
                   <v-list-item-content>
-                    <v-list-item-subtitle v-text="item.content" class="wrap-text"></v-list-item-subtitle>
+                    <v-list-item-title v-text="item.content" class="wrap-text"></v-list-item-title>
+                    <v-list-item-subtitle v-text="item.created" class="wrap-text"></v-list-item-subtitle>
                   </v-list-item-content>
                   <v-list-item-avatar>
                     <v-img :src="item.image"></v-img>
@@ -33,16 +34,12 @@
                     <v-img :src="item.image"></v-img>
                   </v-list-item-avatar>
                   <v-list-item-content>
-                    <v-list-item-subtitle v-text="item.content" class="wrap-text"></v-list-item-subtitle>
+                    <v-list-item-title v-text="item.content" class="wrap-text"></v-list-item-title>
+                    <v-list-item-subtitle v-text="item.created" class="wrap-text"></v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item>
             </v-list>
-            <v-pagination
-              v-model="page"
-              :length="length"
-              @input = "pageChange"
-            ></v-pagination>
           </v-card-text>
         </v-card>
         <v-row>
@@ -74,12 +71,8 @@ export default {
       id: this.$route.params.id,
       userID: this.$auth.user.data.id,
       deleteDialog: false,
-      messages: {},
+      messages: [],
       message: '',
-      page: 1,
-      length: 0,
-      pageSize: 20,
-      lists: [],
     }
   },
   mounted() {
@@ -87,18 +80,19 @@ export default {
     this.$axios.$get(url + 'messages').then((res) => {
       console.log(res);
       for (let i in res.data) {
-        this.lists.push(res.data[i].attributes)
+        this.messages.push(res.data[i].attributes)
       };
-      this.length = Math.ceil(this.lists.length/this.pageSize);
-      this.messages = this.lists.slice(this.pageSize*(this.page -1), this.pageSize*(this.page));
     }).catch((error) => {
       console.log(error);
     });
   },
+  updated() {
+    this.scrollToEnd()
+  },
   methods: {
-    pageChange(pageNumber) {
-      this.messages = this.lists.slice(this.pageSize * (pageNumber - 1),
-      this.pageSize * (pageNumber));
+    scrollToEnd() {
+      var container = this.$el.querySelector("#scroll");
+      container.scrollTop = container.scrollHeight;
     },
     createMessage() {
       let url = `rooms/${this.id}/messages`;
@@ -108,13 +102,11 @@ export default {
         console.log(res)
         this.$axios.$get(url).then((res) => {
           console.log(res);
-          this.lists = [];
+          this.messages = [];
           this.message = '';
           for (let i in res.data) {
-            this.lists.push(res.data[i].attributes)
+            this.messages.push(res.data[i].attributes)
           };
-          this.length = Math.ceil(this.lists.length/this.pageSize);
-          this.messages = this.lists.slice(this.pageSize*(this.page -1), this.pageSize*(this.page));
         }).catch((error) => {
           console.log(error);
         });
@@ -138,8 +130,8 @@ export default {
 </script>
 
 <style lang="scss">
-.wrap-text {
-  word-break: break-all;
-  white-space: normal;
+.v-list#scroll{
+  height:400px;/* or any height you want */
+  overflow-y:auto;
 }
 </style>

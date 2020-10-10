@@ -16,7 +16,7 @@ class FavoritesController < ApplicationController
 
     def create
         favorite = current_user.favorites.create(recipe_id: params[:recipe_id])
-        @recipe.create_notification_like!(current_user)
+        # @recipe.create_notification_like!(current_user)
         render json: { status: 'SUCCESS', data: favorite }
     end
 

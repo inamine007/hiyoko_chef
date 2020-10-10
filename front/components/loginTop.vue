@@ -2,12 +2,12 @@
   <v-container class="fill-height">
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <p class="text mt-5">フォローレシピ</p>
+        <div class="text mt-5">フォローレシピ</div>
         <v-row dense>
           <v-col v-for="recipe in recipes" :key="recipe.id" md="6" xs="12">
             <v-card outlined max-width="320" class="mx-auto" link :to="{ name: 'recipes-id', params: { id: recipe.rid } }">
               <v-card-title>
-                <v-avatar size='34'>
+                <v-avatar size='34' class="mr-2">
                   <v-img v-if="recipe.uimage" :src="recipe.uimage"></v-img>
                 </v-avatar>
                 {{ recipe.uname }}

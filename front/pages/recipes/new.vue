@@ -1,17 +1,7 @@
 <template>
-  <v-container
-    lass="fill-height"
-    fluid
-  >
-    <v-row
-      align="center"
-      justify="center"
-    >
-      <v-col
-        cols="12"
-        sm="10"
-        md="7"
-      >
+  <v-container lass="fill-height" fluid>
+    <v-row align="center" justify="center">
+      <v-col cols="12" sm="10" md="7">
         <v-card class="elevation-12">
           <v-card-title>レシピ作成</v-card-title>
           <v-card-text>
@@ -46,8 +36,8 @@
                 </v-col>
               </v-row>
               <v-file-input
-                accept="image/*, video/*"
-                label="画像または動画"
+                accept="image/*"
+                label="画像"
                 name="image"
                 @change="onUpload()"
                 ref="file"
@@ -192,10 +182,10 @@ export default {
     }
   },
   asyncData({$axios}) {
-     return $axios.get(url_i).then((res) => {
-        console.log(res)
-        return { ingredients: res.data.data }
-     });
+    return $axios.get(url_i).then((res) => {
+      console.log(res)
+      return { ingredients: res.data.data }
+    });
   },
   mounted() {
     this.$axios.$get(url_c).then((res) => {
@@ -230,7 +220,9 @@ export default {
       formData.append('time', this.time)
       formData.append('serve', this.serve)
       formData.append('category_id', this.categories.id)
-      formData.append('group_id', this.groups.id)
+      if (this.groups.id) {
+        formData.append('group_id', this.groups.id)
+      }
       if (this.status) {
         formData.append('status', this.status)
       }

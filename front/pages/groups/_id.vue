@@ -4,7 +4,7 @@
       <v-col cols="12" md="4">
         <v-card outlined align="center">
           <v-card-text>
-            <p class="name">{{ group.name }}</p>
+            <div class="name mb-3">{{ group.name }}</div>
             <v-icon class="mr-2">fas fa-users</v-icon>{{ member_count }}
             <v-list>
               <v-list-item v-for="(item, index) in members" :key="index" @click="link(item)">
@@ -23,15 +23,16 @@
             ></v-pagination>
             <v-divider class="mt-5"></v-divider>
             <div class="text">自己紹介</div>
-            <p class="introduction">{{ group.introduction }}</p>
+            <div class="introduction">{{ group.introduction }}</div>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="12" md="8">
         <v-row justify="center">
-          <p class="text mt-5">グループレシピ</p>
+          <div class="text mt-5">グループレシピ</div>
         </v-row>
         <v-row dense>
+          <div v-if="recipes.length === 0" class="nothing">グループレシピはありません</div>
           <v-col v-for="recipe in recipes" :key="recipe.id" md="6" xs="12">
             <v-card outlined max-width="320" class="mx-auto" link :to="{ name: 'recipes-id', params: { id: recipe.rid } }">
               <v-card-title>
@@ -68,6 +69,7 @@
 <script>
 
 export default {
+  middleware: 'disable-direct-access',
   data() {
     return {
       id: this.$route.params.id,

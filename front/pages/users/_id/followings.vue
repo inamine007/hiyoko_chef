@@ -7,7 +7,7 @@
       </v-col>
       <v-col cols="12" md="8">
         <v-row justify="center">
-          <p class="text mt-5">お気に入り</p>
+          <div class="text mt-5">お気に入り</div>
         </v-row>
         <v-card max-width="500" class="mx-auto">
           <v-list>
