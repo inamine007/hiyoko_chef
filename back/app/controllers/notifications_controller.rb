@@ -20,6 +20,6 @@ class NotificationsController < ApplicationController
   private
 
   def set_notifications
-    @notifications = current_user.passive_notifications.all
+    @notifications = current_user.passive_notifications
   end
 end

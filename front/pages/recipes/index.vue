@@ -143,6 +143,7 @@
               </v-row>
               <v-divider class="mt-3"></v-divider>
               <v-card-title>材料</v-card-title>
+              <v-card-subtitle>※変更する時は仕入れ先から選択しなおしてください。</v-card-subtitle>
               <div v-for="(ri, index) in recipe.ingredients" :key="index">
                 <v-row>
                   <v-col cols="12" sm="4">
@@ -176,6 +177,7 @@
                       @keydown.69.prevent
                       @change="setA(ri, index)"
                       :dense="true"
+                      :readonly="true"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="4" sm="2">
@@ -480,7 +482,9 @@ export default {
       formData.append('time', this.recipe.time);
       formData.append('serve', this.recipe.serve);
       formData.append('category_id', this.recipe.category.id);
-      formData.append('group_id', this.recipe.group_id);
+      if (this.recipe.group_id) {
+        formData.append('group_id', this.recipe.group_id);
+      }
       if (this.recipe.status) {
         formData.append('status', this.recipe.status);
       };

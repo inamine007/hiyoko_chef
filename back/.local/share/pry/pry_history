@@ -568,3 +568,12 @@ Room.find(n.room_id).name
 exit
 Time.zone.name
 exit
+u = User.find(59)
+u = User.find(58)
+u.image
+u.image.present?
+u.update(name: 'test')
+u
+u.update(introduction: 'text')
+u
+exit

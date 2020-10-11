@@ -10,14 +10,27 @@ export default {
     localStorage.setItem("client", query.client)
     localStorage.setItem("uid", query.uid)
 
-    await $axios.$get('/users/whoami').then((res) => {
+  await $axios.$get('/users/whoami').then((res) => {
+    if (res.data.introduction == null) {
+      $axios.$put('/auth', { 
+        introduction: ''
+      }).then((res) => {
+        console.log(res);
         $toast.success('ログインしました！');
         $auth.$storage.setState('user', res);
         $auth.$storage.setState('loggedIn', true);
-    }).catch((error) => {
+      }).catch((error) => {
         console.log(error);
-    });
-    redirect(301, '/')    
+      });
+    } else {
+      $toast.success('ログインしました！');
+      $auth.$storage.setState('user', res);
+      $auth.$storage.setState('loggedIn', true);
+    }
+  }).catch((error) => {
+      console.log(error);
+  });
+  redirect(301, '/')    
  }
 }
 </script>

@@ -10,7 +10,7 @@
             <v-list-item-title>ホーム</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/users/mypage">
+        <v-list-item link to="/mypage">
           <v-list-item-action>
             <v-icon color="red">far fa-user-circle</v-icon>
           </v-list-item-action>
@@ -18,7 +18,7 @@
             <v-list-item-title>マイページ</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/users/">
+        <v-list-item link to="/users">
           <v-list-item-action>
             <v-icon color="pink">fas fa-user</v-icon>
           </v-list-item-action>
@@ -26,7 +26,7 @@
             <v-list-item-title>ユーザー一覧</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/recipes/search">
+        <v-list-item link to="/search">
           <v-list-item-action>
             <v-icon color="green">fas fa-search</v-icon>
           </v-list-item-action>
