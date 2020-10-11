@@ -42,6 +42,10 @@
                 @change="onUpload()"
                 ref="file"
                 :dense="true"
+                :clearable="false"
+                :rules="[required]"
+                hint="※必須"
+                persistent-hint
               ></v-file-input>
               <v-row>
                 <v-col cols="6" sm="6">
@@ -53,6 +57,9 @@
                     item-text="name"
                     item-value="id"
                     :dense="true"
+                    :rules="[required]"
+                    hint="※1つ選択"
+                    persistent-hint
                   ></v-select>
                     </v-col>
                     <v-col cols="6" sm="6">

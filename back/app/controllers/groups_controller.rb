@@ -8,6 +8,11 @@ class GroupsController < ApplicationController
     render json: { status: 'SUCCESS', data: @groups }
   end
 
+  def index
+    groups = current_user.groups
+    render json: { status: 'SUCCESS', message: 'loaded groups', data: groups }
+  end
+  
   def members
     group = Group.find(params[:id])
     users = group.users
@@ -18,6 +23,13 @@ class GroupsController < ApplicationController
     recipes = @group.recipes.all
     render json: recipes, each_serializer: RecipeSerializer
     # render json: { status: 'SUCCESS', message: 'loaded recipes', data: @recipes }
+  end
+
+  def show
+    group = Group.find(params[:id])
+    members = group.users
+    member_count = group.users.length
+    render json: { status: 'SUCCESS', message: 'loaded groups', data: group, data_count: member_count, data_members: members}
   end
 
   def add_user_group
@@ -37,18 +49,6 @@ class GroupsController < ApplicationController
     render json: { status: 'SUCCESS', message: 'Exited the group', data: group }
   end
 
-  def index
-    groups = current_user.groups
-    render json: { status: 'SUCCESS', message: 'loaded groups', data: groups }
-  end
-
-  def show
-    group = Group.find(params[:id])
-    members = group.users
-    member_count = group.users.length
-    render json: { status: 'SUCCESS', message: 'loaded groups', data: group, data_count: member_count, data_members: members}
-  end
-
   def create
     group = Group.new(group_params)
     group.users << current_user
@@ -60,17 +60,17 @@ class GroupsController < ApplicationController
     end
   end
 
-  def destroy
-    @group.destroy
-    render json: { status: 'SUCCESS', message: 'Deleted the group', data: @groups }
-  end
-
   def update
     if @group.update(group_params)
-      render json: { status: 'SUCCESS', message: 'Updated the group', data: @groups }
+      render json: { status: 'SUCCESS', message: 'Updated the group', data: @group }
     else
-      render json: { status: 'ERROR', message: 'Not updated', data: @groups.errors }
+      render json: { status: 'ERROR', message: 'Not updated', data: @group.errors }
     end
+  end
+
+  def destroy
+    @group.destroy
+    render json: { status: 'SUCCESS', message: 'Deleted the group', data: @group }
   end
 
   private
@@ -80,6 +80,6 @@ class GroupsController < ApplicationController
   end
 
   def group_params
-    params.require(:group).permit(:id, :name, :introduction, :password, :owner_id, :image)
+    params.require(:group).permit(:id, :name, :introduction, :password, :owner_id)
   end
 end
