@@ -91,7 +91,6 @@ export default {
   mounted() {
     let url = `/groups/${this.id}/owner`
     this.$axios.$get(url).then((res) => {
-      console.log(res);
       this.lists = res.data;
       this.length = Math.ceil(this.lists.length/this.pageSize);
       this.groups = this.lists.slice(this.pageSize*(this.page -1), this.pageSize*(this.page));
@@ -108,7 +107,7 @@ export default {
       let url = `groups/${item.id}`
       this.$axios.$get(url).then((res) => {
         for (let i in res.data_members) {
-        this.member_id.push(res.data_members[i].id)
+        this.member_id.push(res.data_members[i].id);
       };
       if (this.member_id.includes(Number(this.userID))) {
         this.removeDialog = true;
@@ -126,12 +125,11 @@ export default {
         id: groupID,
         password: this.password
       }).then ((res) => {
-        console.log(res);
         if (res.status == 'ERROR') {
-          this.$toasted.error('参加できませんでした')
+          this.$toasted.error('参加できませんでした');
         } else {
           this.$router.push({path: '/groups/'});
-          this.$toasted.success(this.groupName + 'に参加しました!')
+          this.$toasted.success(this.groupName + 'に参加しました!');
         };
       }).catch((error) => {
         console.log(error);

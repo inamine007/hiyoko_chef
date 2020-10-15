@@ -53,9 +53,8 @@ export default {
   mounted() {
     let url = `/users/${this.id}/followings`
     this.$axios.$get(url).then((res) => {
-      console.log(res);
       for (let i in res.data) {
-        this.lists.push(res.data[i].attributes)
+        this.lists.push(res.data[i].attributes);
       };
       this.length = Math.ceil(this.lists.length/this.pageSize);
       this.followings = this.lists.slice(this.pageSize*(this.page -1), this.pageSize*(this.page));

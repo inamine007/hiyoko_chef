@@ -78,7 +78,6 @@ export default {
     let url = `/users/${this.id}/`;
     let url_g = `groups/${this.id}/owner`;
     this.$axios.$get(url).then((res) => {
-      console.log(res);
       this.user = res.data;
       this.selectedImageUrl = res.data.encode_image;
     }).catch((error) => {
@@ -86,26 +85,22 @@ export default {
     });
     this.$axios.$get(url_re).then((res) => {
       for (let i in res.data_followings) {
-        this.followings.push(res.data_followings[i].id)
+        this.followings.push(res.data_followings[i].id);
       };
-      console.log(this.followings);
     }).catch((error) => {
       console.log(error);
     });
     this.$axios.$get(url + 'followings').then((res) => {
-      console.log(res);
       this.followings_count = res.data.length;
     }).catch((error) => {
       console.log(error);
     });
     this.$axios.$get(url + 'followers').then((res) => {
-      console.log(res);
       this.followers_count = res.data.length;
     }).catch((error) => {
       console.log(error);
     });
     this.$axios.$get(url_g).then((res) => {
-      console.log(res);
       this.groups_count = res.data.length;
     }).catch((error) => {
       console.log(error);
@@ -122,12 +117,11 @@ export default {
     follow() {
       let url_ur =`/users/${this.id}/relationships`
       this.$axios.$post(url_ur).then((res) => {
-        console.log(res);
         this.$axios.$get(url_re).then((res) => {
         for (let i in res.data_followings) {
-          this.followings.push(res.data_followings[i].id)
+          this.followings.push(res.data_followings[i].id);
         };
-        this.$toasted.success(this.user.name + 'をフォローしました！')
+        this.$toasted.success(this.user.name + 'をフォローしました！');
       }).catch((error) => {
         console.log(error);
       });
@@ -138,9 +132,8 @@ export default {
     unfollow() {
       let url_ur =`/users/${this.id}/relationships`
       this.$axios.$delete(url_ur).then((res) => {
-        console.log(res);
         this.followings = [];
-        this.$toasted.success(this.user.name + 'のフォローを解除しました！')
+        this.$toasted.success(this.user.name + 'のフォローを解除しました！');
       }).catch((error) => {
         console.log(res);
       });
@@ -150,8 +143,11 @@ export default {
         user_id: this.id,
         name: this.room_name
       }).then((res) => {
-        console.log(res);
-        this.$router.replace({path: `/rooms/${res.data.id}`});
+        if ( this.room_name) {
+          this.$router.replace({path: `/rooms/${res.data.id}`});
+        } else {
+          this.$toasted.error('ルーム名を記入してください');
+        }
       }).catch((error) => {
         console.log(error);
       });

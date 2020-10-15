@@ -13,12 +13,8 @@ class Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
   
   private
 
-  # def attach_main_image(user)
-  #   user.image.attach(sign_up_params[:image])
-  # end
-
   def sign_up_params
-    params.require(:user).permit(:name, :email, :signed_blob_id, :password, :image, :password_confirmation, :introduction)
+    params.require(:user).permit(:name, :email, :signed_blob_id, :password, :image, :password_confirmation, :introduction, :nickname)
   end
 
   def user_params
@@ -28,11 +24,11 @@ class Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
       password: sign_up_params[:password],
       password_confirmation: sign_up_params[:password_confirmation],
       introduction: sign_up_params[:introduction],
-      # image: sign_up_params[:image]
+      nickname: sign_up_params[:nickname]
     }
   end
  
   def account_update_params
-    params.permit(:name, :email, :introduction, :image)
+    params.permit(:name, :email, :introduction, :image, :nickname)
   end
 end

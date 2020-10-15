@@ -225,8 +225,7 @@ export default {
   },
   mounted() {
     this.$axios.$get(url).then((res) => {
-      console.log(res)
-      this.serverDatas = res.data
+      this.serverDatas = res.data;
     }).catch((error) => {
       console.log(error);
     });
@@ -235,7 +234,6 @@ export default {
     onClickEvent(data) {
       this.showDialog = true,
       this.$axios.$get(url + data.id).then((res) => {
-        console.log(res);
         this.form = res.data;
       }).catch((error) => {
         console.log(error);
@@ -248,17 +246,15 @@ export default {
     },
     deleteItem (deleteID, deleteName) {
     this.$axios.$delete(url + deleteID).then((res) => {
-      console.log(res);
-        this.$axios.$get(url).then((res) => {
-        console.log(res)
-        this.serverDatas = res.data
-        this.$toasted.success(deleteName + 'を削除しました！');
+      this.$axios.$get(url).then((res) => {
+      this.serverDatas = res.data;
+      this.$toasted.success(deleteName + 'を削除しました！');
       }).catch((error) => {
         console.log(error);
       });
-      }).catch((error) => {
-        console.log(error);
-      })
+    }).catch((error) => {
+      console.log(error);
+    });
     this.deleteDialog = false;
     },
     editConfirm(item) {
@@ -266,7 +262,6 @@ export default {
       this.editID = item.id;
       this.editName = item.name;
       this.$axios.$get(url + item.id).then((res) => {
-        console.log(res);
         this.form = res.data;
         this.form.budomari = Number(res.data.budomari);
         this.form.converted_number = Number(res.data.converted_number);
@@ -277,10 +272,8 @@ export default {
         if (res.status == 'ERROR') {
           this.$toasted.error("入力に誤りがあります")
         } else {
-          console.log(res);
           this.$axios.$get(url).then((res) => {
-          console.log(res)
-          this.serverDatas = res.data
+          this.serverDatas = res.data;
           this.editDialog = false;
           this.$toasted.success(editName + 'を更新しました！');
           }).catch((error) => {
@@ -290,7 +283,7 @@ export default {
       }).catch((error) => {
         console.log(error);
         this.$toasted.error('更新できませんでした');
-      })
+      });
     }
   }
 }

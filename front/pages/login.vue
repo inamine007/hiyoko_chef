@@ -27,6 +27,7 @@
                 type="password"
               ></v-text-field>
               <v-card-actions>
+                <v-spacer></v-spacer>
                 <v-btn type="submit" color="primary">ログイン</v-btn>
               </v-card-actions>
             </v-form>
@@ -49,8 +50,10 @@ export default {
       email: '',
       password: '',
       google: {
-        url: 'http://localhost:3000/auth/google',
-        redirectUrl: 'http://localhost:8080/oauth/google/callback'
+        // url: 'http://localhost:3000/auth/google',
+        // redirectUrl: 'http://localhost:8080/oauth/google/callback'
+        url: 'https://back.hiyoko-chef.com:443/auth/google',
+        redirectUrl: 'https://hiyoko-chef.com/oauth/google/callback'
       }
     }
   },

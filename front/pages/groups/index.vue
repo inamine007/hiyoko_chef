@@ -161,8 +161,7 @@ export default {
   },
   mounted() {
     this.$axios.$get(url).then((res) => {
-      console.log(res)
-      this.serverDatas = res.data
+      this.serverDatas = res.data;
     }).catch((error) => {
       console.log(error);
     });
@@ -178,10 +177,8 @@ export default {
     },
     deleteItem(deleteID, deleteName) {
     this.$axios.$delete(url + deleteID).then((res) => {
-      console.log(res);
         this.$axios.$get(url).then((res) => {
-        console.log(res)
-        this.serverDatas = res.data
+        this.serverDatas = res.data;
         this.$toasted.success(deleteName + 'を削除しました！');
       }).catch((error) => {
         console.log(error);
@@ -196,9 +193,8 @@ export default {
       this.editID = item.id;
       this.editName = item.name;
       this.$axios.$get(url + item.id).then((res) => {
-        console.log(res);
         this.form = res.data;
-      })
+      });
     },
     editGroup(editID, editName) {
       this.$axios.$put(url + editID, this.form).then((res) => {
@@ -207,8 +203,7 @@ export default {
         } else {
           console.log(res);
           this.$axios.$get(url).then((res) => {
-          console.log(res)
-          this.serverDatas = res.data
+          this.serverDatas = res.data;
           this.editDialog = false;
           this.$toasted.success(editName + 'を更新しました！');
           }).catch((error) => {
@@ -218,7 +213,7 @@ export default {
       }).catch((error) => {
         console.log(error);
         this.$toasted.error('更新できませんでした');
-      })
+      });
     },
     removeConfirm(item) {
       this.removeDialog = true;
@@ -227,17 +222,15 @@ export default {
     },
     removeItem(removeID, removeName) {
     this.$axios.$post(url + removeID + '/remove_user').then((res) => {
-      console.log(res);
-        this.$axios.$get(url).then((res) => {
-        console.log(res)
-        this.serverDatas = res.data
-        this.$toasted.success(removeName + 'を退会しました！');
-      }).catch((error) => {
-        console.log(error);
-      });
-      }).catch((error) => {
-        console.log(error);
-      })
+      this.$axios.$get(url).then((res) => {
+      this.serverDatas = res.data;
+      this.$toasted.success(removeName + 'を退会しました！');
+    }).catch((error) => {
+      console.log(error);
+    });
+    }).catch((error) => {
+      console.log(error);
+    });
     this.removeDialog = false;
     },
   }

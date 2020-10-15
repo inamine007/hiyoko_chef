@@ -118,20 +118,19 @@ export default {
       for (let key in res.data) {
         this.chartLabels.push(key);
         this.chartDataValues.push(res.data[key]);
-      }
+      };
     }).catch((error) => {
       console.log(error);
     });
     this.$axios.$get(url_r).then((res) => {
       for (let i in res.data) {
-        this.lists.push(res.data[i].attributes)
+        this.lists.push(res.data[i].attributes);
       };
       this.length = Math.ceil(this.lists.length/this.pageSize);
       this.recipes = this.lists.slice(this.pageSize*(this.page -1), this.pageSize*(this.page));
     }).catch((error) => {
       console.log(error);
     });
-    
   },
   methods: {
     pageChange(pageNumber) {

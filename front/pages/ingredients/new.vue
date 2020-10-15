@@ -109,7 +109,6 @@ export default {
     async createIngredient() {
       await this.$axios.$post(url, this.form)
       .then((res) => {
-        console.log(res);
         this.$router.replace({path: '/ingredients/'});
         this.$toasted.success(this.form.name + 'を作成しました！');
         return res
@@ -117,7 +116,7 @@ export default {
         console.log(error);
         this.$toasted.error('作成できませんでした');
         return error
-      })
+      });
     }
   }
 }

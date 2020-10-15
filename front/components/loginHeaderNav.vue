@@ -125,8 +125,8 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-      <v-dialog v-model="roomDialog" persistent>
-        <v-card max-width="500" class="mx-auto">
+      <v-dialog v-model="roomDialog" persistent max-width="500">
+        <v-card class="mx-auto">
           <v-list>
             <v-list-item v-for="(item, index) in rooms" :key="index" @click="link(item), roomDialog=false">
               <v-list-item-content>
@@ -165,18 +165,17 @@ export default {
   },
   mounted() {
     this.$axios.$get(url_r).then((res) => {
-      console.log(res);
-      this.rooms = res.data
+      this.rooms = res.data;
     }).catch((error) => {
       console.log(error);
     });
     this.$axios.$get(url_n).then((res) => {
       for (let i in res.data) {
-        this.notifications.push(res.data[i].attributes)
+        this.notifications.push(res.data[i].attributes);
       };
       for (let i in this.notifications) {
-        this.checked.push(this.notifications[i].checked)
-      }
+        this.checked.push(this.notifications[i].checked);
+      };
       console.log(this.checked);
     }).catch((error) => {
       console.log(error);
@@ -189,9 +188,7 @@ export default {
     },
     deleteItem() {
       this.$axios.$delete(url).then((res) => {
-        console.log(res);
         this.$auth.logout();
-        // this.$router.replace({path: '/'});
         this.$toasted.success('アカウントを削除しました。ご利用ありがとうございました！');
       }).catch((error) => {
         console.log(error);
@@ -202,7 +199,6 @@ export default {
     },
     deleteAll() {
       this.$axios.$get(url_n + 'destroy_all').then((res) => {
-        console.log(res);
         this.notifications = res.data;
       }).catch((error) => {
         console.log(error);
@@ -213,12 +209,11 @@ export default {
         this.notifications = [];
         this.checked = [];
         for (let i in res.data) {
-        this.notifications.push(res.data[i].attributes)
+        this.notifications.push(res.data[i].attributes);
         };
         for (let i in this.notifications) {
-          this.checked.push(this.notifications[i].checked)
+          this.checked.push(this.notifications[i].checked);
         };
-        console.log(this.checked)
       }).catch((error) => {
         console.log(error);
       });

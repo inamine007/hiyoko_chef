@@ -190,19 +190,16 @@ export default {
   },
   asyncData({$axios}) {
     return $axios.get(url_i).then((res) => {
-      console.log(res)
-      return { ingredients: res.data.data }
+      return { ingredients: res.data.data };
     });
   },
   mounted() {
     this.$axios.$get(url_c).then((res) => {
-      console.log(res);
-      this.categories = res.data
+      this.categories = res.data;
     }).catch((error) => {
       console.log(error);
     });
     this.$axios.$get(url_g).then((res) => {
-      console.log(res);
       this.groups = res.data;
     }).catch((error) => {
       console.log(error);
@@ -214,45 +211,43 @@ export default {
     },
     setI(col, index) {
       this.setID.splice(index, 1, col.ingredients.fil.id);
-      col.unit_used = this.ingredients.find(item => item.id === col.ingredients.fil.id).unit_used
+      col.unit_used = this.ingredients.find(item => item.id === col.ingredients.fil.id).unit_used;
     },
     setA(col, index) {
       this.setAmount.splice(index, 1, col.amount);
-      console.log(this.setAmount)
     },
     createRecipe() {
-      let formData = new FormData()
-      formData.append('name', this.name)
-      formData.append('description', this.description)
-      formData.append('time', this.time)
-      formData.append('serve', this.serve)
-      formData.append('category_id', this.categories.id)
+      let formData = new FormData();
+      formData.append('name', this.name);
+      formData.append('description', this.description);
+      formData.append('time', this.time);
+      formData.append('serve', this.serve);
+      formData.append('category_id', this.categories.id);
       if (this.groups.id) {
-        formData.append('group_id', this.groups.id)
-      }
+        formData.append('group_id', this.groups.id);
+      };
       if (this.status) {
-        formData.append('status', this.status)
-      }
+        formData.append('status', this.status);
+      };
       formData.append('image', this.image);
       for (let i = 0; i < this.setID.length && this.setAmount.length; i++) {
         let id = this.setID[i];
         let amount = this.setAmount[i]; 
-        formData.append('ingredient_recipes_attributes[][ingredient_id]', id)
-        formData.append('ingredient_recipes_attributes[][amount]', amount)
-      }
+        formData.append('ingredient_recipes_attributes[][ingredient_id]', id);
+        formData.append('ingredient_recipes_attributes[][amount]', amount);
+      };
       this.$axios.$post(url_r, formData).then((res) => {
-        console.log(res);
         if (res.status == 'ERROR') {
           var messages = [];
           for (var i=0; i<res.data.length; i++){
             messages.push(res.data[i]);
-          }
-          var result = messages.join('<br>')
-          this.$toasted.error(result)
+          };
+          var result = messages.join('<br>');
+          this.$toasted.error(result);
         } else {
             this.$router.replace({path: '/recipes/'});
             this.$toasted.success(this.name + 'を作成しました！');
-        }
+        };
       }).catch((error) => {
         console.log(error);
         this.$toasted.error('作成できませんでした');
@@ -260,20 +255,19 @@ export default {
       })
     },
     selected(col) {
-      col.ingredients.fil = this.ingredients.filter(item => item.trader === col.trader)
+      col.ingredients.fil = this.ingredients.filter(item => item.trader === col.trader);
       console.log(col.ingredients.fil);
       return col.ingredients.fil
     },
     addItems() {
-      this.cols.push(this.independentObejct())
+      this.cols.push(this.independentObejct());
     },
     removeItems(target) {
-      this.cols.splice(target, 1)
-      this.setID.splice(target, 1)
-      this.setAmount.splice(target, 1)
-      console.log(this.setID)
-      console.log(this.setAmount)
-
+      this.cols.splice(target, 1);
+      this.setID.splice(target, 1);
+      this.setAmount.splice(target, 1);
+      console.log(this.setID);
+      console.log(this.setAmount);
     },
     independentObejct () {
       return {

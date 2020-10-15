@@ -92,7 +92,6 @@ export default {
   mounted() {
     let url = `/groups/${this.id}/`;
     this.$axios.$get(url).then((res) => {
-      console.log(res);
       this.group = res.data;
       this.member_count = res.data_count;
     }).catch((error) => {

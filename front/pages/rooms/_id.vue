@@ -78,16 +78,15 @@ export default {
   mounted() {
     let url = `rooms/${this.id}/`;
     this.$axios.$get(url + 'messages').then((res) => {
-      console.log(res);
       for (let i in res.data) {
-        this.messages.push(res.data[i].attributes)
+        this.messages.push(res.data[i].attributes);
       };
     }).catch((error) => {
       console.log(error);
     });
   },
   updated() {
-    this.scrollToEnd()
+    this.scrollToEnd();
   },
   methods: {
     scrollToEnd() {
@@ -99,13 +98,11 @@ export default {
       this.$axios.$post(url, {
         content: this.message
       }).then((res) => {
-        console.log(res)
         this.$axios.$get(url).then((res) => {
-          console.log(res);
           this.messages = [];
           this.message = '';
           for (let i in res.data) {
-            this.messages.push(res.data[i].attributes)
+            this.messages.push(res.data[i].attributes);
           };
         }).catch((error) => {
           console.log(error);
@@ -117,7 +114,6 @@ export default {
     deleteRoom() {
       let url = `rooms/${this.id}/`;
       this.$axios.$delete(url).then((res) => {
-        console.log(res);
         this.$router.replace({path: '/'});
         location.reload();
         this.$toasted.success('トークルームを削除しました');

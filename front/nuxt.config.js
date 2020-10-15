@@ -1,3 +1,4 @@
+require('dotenv').config()
 
 export default {
   /*
@@ -66,13 +67,14 @@ export default {
   modules: [
     '@nuxtjs/vuetify',
     '@nuxtjs/axios',
+    '@nuxtjs/dotenv',
     '@nuxtjs/auth',
     '@nuxtjs/toast',
     'nuxt-fontawesome'
   ],
   axios: {
-    // proxy: true
-    baseURL: 'http://localhost:3000'
+    // baseURL: process.env.DEV_BASE_URL,
+    baseURL: process.env.PRD_BASE_URL
   },
   proxy: {
     '/api/': { target: 'http://back:3000', pathRewrite: { '^/api/': '/' } }

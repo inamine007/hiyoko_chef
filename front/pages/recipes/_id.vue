@@ -186,7 +186,6 @@ export default {
   mounted() {
     let url = `recipes/${this.id}/`;
     this.$axios.$get(url).then((res) => {
-      console.log(res);
       this.recipe = res.data;
       for (let i in this.recipe.detail) {
         this.amounts.push(this.recipe.detail[i].amount)
@@ -195,7 +194,6 @@ export default {
       console.log(error);
     });
     this.$axios.$get(url + 'favorites').then((res) => {
-      console.log(res);
       this.favoritesUserID = res.data;
       this.favoritesCount = res.data.length;
     }).catch((error) => {
@@ -232,13 +230,11 @@ export default {
     favorites() {
       let url = `recipes/${this.id}/favorites/`;
       this.$axios.$post(url).then((res) => {
-        console.log(res);
         this.$axios.$get(url).then((res) => {
-          console.log(res);
           this.listsF = [];
           this.$axios.$get(url + 'users').then((res) => {
             for (let i in res.data) {
-              this.listsF.push(res.data[i].attributes)
+              this.listsF.push(res.data[i].attributes);
             };
             this.lengthF = Math.ceil(this.listsF.length/this.pageSizeF);
             this.favoritesUser = this.listsF.slice(this.pageSizeF*(this.pageFavorite -1), this.pageSizeF*(this.pageFavorite));
@@ -257,9 +253,7 @@ export default {
     unfavorites() {
       let url = `recipes/${this.id}/favorites/`;
       this.$axios.$delete(url).then((res) => {
-        console.log(res);
         this.$axios.$get(url).then((res) => {
-          console.log(res);
           this.listsF = [];
           this.$axios.$get(url + 'users').then((res) => {
             for (let i in res.data) {
@@ -284,14 +278,13 @@ export default {
       this.$axios.$post(url, {
         content: this.content
       }).then((res) => {
-        console.log(res);
         if (res.status == 'ERROR') {
           var messages = [];
           for (var i=0; i<res.data.length; i++){
             messages.push(res.data[i]);
-          }
-          var result = messages.join('<br>')
-          this.$toasted.error(result)
+          };
+          var result = messages.join('<br>');
+          this.$toasted.error(result);
         } else {
           this.listsC = [];
           this.$axios.$get(url).then((res) => {
@@ -307,7 +300,7 @@ export default {
           this.commentsDialog = true;
           this.content = '';
           this.$toasted.success(this.recipe.name + 'にコメントしました！');
-        }
+        };
       }).catch((error) => {
         console.log(error);
       });
@@ -315,18 +308,16 @@ export default {
     deleteConfirm(item) {
       this.deleteDialog = true;
       this.deleteID = item.cid;
-      console.log(this.deleteID)
     },
     deleteComment() {
       let url = `recipes/${this.id}/comments`;
       this.$axios.$delete(url, {
         params: { id: this.deleteID }
       }).then((res) => {
-        console.log(res);
         this.listsC = [];
         this.$axios.$get(url).then((res) => {
           for (let i in res.data) {
-            this.listsC.push(res.data[i].attributes)
+            this.listsC.push(res.data[i].attributes);
           };
           this.lengthC = Math.ceil(this.listsC.length/this.pageSizeC);
           this.comments = this.listsC.slice(this.pageSizeC*(this.pageComment -1), this.pageSizeC*(this.pageComment));

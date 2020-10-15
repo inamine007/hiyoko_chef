@@ -352,25 +352,21 @@ export default {
   },
   mounted() {
     this.$axios.$get(url_r).then((res) => {
-      console.log(res);
       this.serverDatas = res.data;
     }).catch((error) => {
       console.log(error);
     });
     this.$axios.$get(url_i).then((res) => {
-      console.log(res);
       this.ingredients = res.data
     }).catch((error) => {
       console.log(error);
     });
     this.$axios.$get(url_c).then((res) => {
-      console.log(res);
       this.categories = res.data
     }).catch((error) => {
       console.log(error);
     });
     this.$axios.$get(url_g).then((res) => {
-      console.log(res);
       this.groups = res.data;
     }).catch((error) => {
       console.log(error);
@@ -380,7 +376,6 @@ export default {
     onClickEvent(data) {
       this.showDialog = true,
       this.$axios.$get(url + data.id).then((res) => {
-        console.log(res);
         this.recipe = res.data;
         this.showImageUrl = res.data.encode_image
         for (let i in this.recipe.detail) {
@@ -397,9 +392,7 @@ export default {
     },
     deleteItem (deleteID, deleteName) {
     this.$axios.$delete(url + deleteID).then((res) => {
-      console.log(res);
         this.$axios.$get(url_r).then((res) => {
-        console.log(res);
         this.serverDatas = res.data;
         this.$toasted.success(deleteName + 'を削除しました！');
       }).catch((error) => {
@@ -418,26 +411,25 @@ export default {
         this.recipe = res.data;
         this.selectedImageUrl = res.data.encode_image;
         for (let i in this.recipe.detail) {
-          this.amounts.push(this.recipe.detail[i].amount)
+          this.amounts.push(this.recipe.detail[i].amount);
         };
         for (let i in this.recipe.detail) {
-          this.setAmount.push(this.recipe.detail[i].amount)
+          this.setAmount.push(this.recipe.detail[i].amount);
         };
         for (let i in this.recipe.ingredients) {
-          this.setID.push(this.recipe.ingredients[i].id)
+          this.setID.push(this.recipe.ingredients[i].id);
         };
-        console.log(this.setAmount)
       }).catch((error) => {
         console.log(error)
       });
     },
     onUpload() {
       this.recipe.image = event.target.files[0];
-      let reader = new FileReader()
+      let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.addEventListener('load', () => {
         this.selectedImageUrl = reader.result;
-      })
+      });
     },
     setI(ri, index) {
       this.setID.splice(index, 1, ri.fil.id);
@@ -457,26 +449,25 @@ export default {
       this.amounts.splice(target, 1);
       this.setID.splice(target, 1);
       this.setAmount.splice(target, 1);
-      console.log(this.amounts);
     },
     independentObejct () {
       return {
         id: '',
-            name: '',
-            trader: '',
-            unit: '',
-            unit_used: '',
-            cost: '',
-            budomari: '',
-            converted_number: '',
-            cost_used: '',
-            fil: {
-              id: ''
+          name: '',
+          trader: '',
+          unit: '',
+          unit_used: '',
+          cost: '',
+          budomari: '',
+          converted_number: '',
+          cost_used: '',
+          fil: {
+            id: ''
         }
       }
     },
     editRecipe(editID, editName) {
-      let formData = new FormData()
+      let formData = new FormData();
       formData.append('name', this.recipe.name);
       formData.append('description', this.recipe.description);
       formData.append('time', this.recipe.time);
@@ -484,7 +475,7 @@ export default {
       formData.append('category_id', this.recipe.category.id);
       if (this.recipe.group_id) {
         formData.append('group_id', this.recipe.group_id);
-      }
+      };
       if (this.recipe.status) {
         formData.append('status', this.recipe.status);
       };
@@ -498,18 +489,15 @@ export default {
         formData.append('ingredient_recipes_attributes[][amount]', amount);
       };
       this.$axios.$put(url + editID, formData).then((res) => {
-        console.log(res);
         if (res.status == 'ERROR') {
           this.$toasted.error("入力に誤りがあります")
         } else {
-          console.log(res);
           this.$axios.$get(url_r).then((res) => {
-            console.log(res)
-            this.serverDatas = res.data
+            this.serverDatas = res.data;
             this.$toasted.success(editName + 'を更新しました！');
-            this.setID = []
-            this.setAmount = []
-            this.amounts = []
+            this.setID = [];
+            this.setAmount = [];
+            this.amounts = [];
             this.editDialog = false;
             }).catch((error) => {
             console.log(error);

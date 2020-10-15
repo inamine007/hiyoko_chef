@@ -12,10 +12,11 @@ export default {
 
   await $axios.$get('/users/whoami').then((res) => {
     if (res.data.introduction == null) {
-      $axios.$put('/auth', { 
+      $axios.$put('/auth', {
+        name: "google" + res.data.id,
+        nickname: "google" + res.data.id,
         introduction: ''
       }).then((res) => {
-        console.log(res);
         $toast.success('ログインしました！');
         $auth.$storage.setState('user', res);
         $auth.$storage.setState('loggedIn', true);
@@ -23,9 +24,15 @@ export default {
         console.log(error);
       });
     } else {
-      $toast.success('ログインしました！');
-      $auth.$storage.setState('user', res);
-      $auth.$storage.setState('loggedIn', true);
+      $axios.$put('/auth', {
+        name: res.data.nickname,
+      }).then((res) => {
+        $toast.success('ログインしました！');
+        $auth.$storage.setState('user', res);
+        $auth.$storage.setState('loggedIn', true);
+      }).catch((error) => {
+        console.log(error);
+      });
     }
   }).catch((error) => {
       console.log(error);

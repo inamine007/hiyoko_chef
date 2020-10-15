@@ -35,10 +35,20 @@
         <v-card-text>
           <v-form @submit.prevent="editUser()">
             <v-text-field
+              v-if="provider == 'google'"
+              v-model="user.nickname"
+              label="名前"
+              :rules="[required, name_length]"
+              name="nickame"
+              counter="20"
+            ></v-text-field>
+            <v-text-field
+              v-else
               v-model="user.name"
               label="名前"
               :rules="[required, name_length]"
               name="name"
+              counter="20"
             ></v-text-field>
             <v-text-field
               v-model="user.email"
@@ -89,6 +99,7 @@ export default {
   data() {
     return {
       id: this.$auth.user.data.id,
+      provider: this.$auth.user.data.provider,
       user: {},
       followings: [],
       selectedImageUrl: null,
@@ -103,10 +114,8 @@ export default {
   },
   mounted() {
     this.$axios.$get(url).then((res) => {
-      console.log(res);
       this.user = res.data;
       this.selectedImageUrl = res.data.encode_image;
-      console.log(this.id)
     }).catch((error) => {
       console.log(error);
     });
@@ -114,33 +123,28 @@ export default {
     let url_fi = `users/${this.id}/followings`;
     let url_fe = `users/${this.id}/followers`;
     this.$axios.$get(url_gs).then((res) => {
-      console.log(res);
       this.groups = res.data;
     }).catch((error) => {
       console.log(error);
     });
     this.$axios.$get(url_re).then((res) => {
       for (let i in res.data_followings) {
-        this.followings.push(res.data_followings[i].id)
+        this.followings.push(res.data_followings[i].id);
       };
-      console.log(this.followings);
     }).catch((error) => {
       console.log(error);
     });
     this.$axios.$get(url_fi).then((res) => {
-      console.log(res);
       this.followings_count = res.data.length;
     }).catch((error) => {
       console.log(error);
     });
     this.$axios.$get(url_fe).then((res) => {
-      console.log(res);
       this.followers_count = res.data.length;
     }).catch((error) => {
       console.log(error);
     });
     this.$axios.$get(url_g).then((res) => {
-      console.log(res);
       this.groups_count = res.data.length;
     }).catch((error) => {
       console.log(error);
@@ -157,29 +161,30 @@ export default {
     },
     editCancel() {
       this.$axios.$get(url).then((res) => {
-      console.log(res)
-      this.user = res.data
+      this.user = res.data;
       this.editDialog = false;
       }).catch((error) => {
         console.log(error);
       });
     },
     editUser() {
-      let formData = new FormData()
-      formData.append('name', this.user.name)
-      formData.append('email', this.user.email)
-      formData.append('introduction', this.user.introduction)
+      let formData = new FormData();
+      formData.append('name', this.user.name);
+      if (this.user.nickname) {
+        formData.append('name', this.user.nickname);
+        formData.append('nickname', this.user.nickname);
+      }
+      formData.append('email', this.user.email);
+      formData.append('introduction', this.user.introduction);
       if (this.user.image) {
-        formData.append('image', this.user.image)
+        formData.append('image', this.user.image);
       };
       this.$axios.$put(url_e, formData).then((res) => {
         if (res.status == 'ERROR') {
-          this.$toasted.error("入力に誤りがあります")
+          this.$toasted.error("入力に誤りがあります");
         } else {
-          console.log(res);
           this.$axios.$get(url).then((res) => {
-          console.log(res)
-          this.user = res.data
+          this.user = res.data;
           this.editDialog = false;
           this.$toasted.success('プロフィールを更新しました！');
           }).catch((error) => {
@@ -194,12 +199,11 @@ export default {
     follow() {
       let url_ur =`/users/${this.id}/relationships`
       this.$axios.$post(url_ur).then((res) => {
-        console.log(res);
         this.$axios.$get(url_re).then((res) => {
         for (let i in res.data_followings) {
-          this.followings.push(res.data_followings[i].id)
+          this.followings.push(res.data_followings[i].id);
         };
-        this.$toasted.success(this.user.name + 'をフォローしました！')
+        this.$toasted.success(this.user.name + 'をフォローしました！');
       }).catch((error) => {
         console.log(error);
       });
@@ -210,11 +214,10 @@ export default {
     unfollow() {
       let url_ur =`/users/${this.id}/relationships`
       this.$axios.$delete(url_ur).then((res) => {
-        console.log(res);
         this.followings = [];
-        this.$toasted.success(this.user.name + 'のフォローを解除しました！')
+        this.$toasted.success(this.user.name + 'のフォローを解除しました！');
       }).catch((error) => {
-        console.log(res);
+        console.log(error);
       });
     }
   }

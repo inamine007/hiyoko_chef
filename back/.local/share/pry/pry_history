@@ -577,3 +577,12 @@ u
 u.update(introduction: 'text')
 u
 exit
+Category.create(name: 'その他')
+Category.all
+exit
+Room.all
+exit
+Rails.application.credentials.dig(:aws, :access_key_id)
+exit
+Rails.application.credentials.dig(:aws, :secret_access_key)
+exit

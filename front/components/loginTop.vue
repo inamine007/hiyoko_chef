@@ -53,7 +53,7 @@ export default {
   mounted() {
     this.$axios.$get(url).then((res) => {
       for (let i in res.data) {
-        this.lists.push(res.data[i].attributes)
+        this.lists.push(res.data[i].attributes);
       };
       this.length = Math.ceil(this.lists.length/this.pageSize);
       this.recipes = this.lists.slice(this.pageSize*(this.page -1), this.pageSize*(this.page));

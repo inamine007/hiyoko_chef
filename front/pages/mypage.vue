@@ -118,7 +118,7 @@ export default {
       for (let key in res.data) {
         this.chartLabels.push(key);
         this.chartDataValues.push(res.data[key]);
-      }
+      };
     }).catch((error) => {
       console.log(error);
     });
@@ -128,7 +128,6 @@ export default {
       };
       this.length = Math.ceil(this.lists.length/this.pageSize);
       this.recipes = this.lists.slice(this.pageSize*(this.page -1), this.pageSize*(this.page));
-      console.log(this.recipes);
     }).catch((error) => {
       console.log(error);
     });

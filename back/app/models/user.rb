@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :ingredients, dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :entries
+  has_many :entries, dependent: :destroy
   has_many :rooms, through: :entries
   has_many :group_users
   has_many :groups, through: :group_users
@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
 
   validates :name, presence: true, uniqueness: true, length: { maximum: 20 }
+  validates :nickname, length: { maximum: 20 }
   validates :email, presence: true, uniqueness: true
   validates :introduction, length: { maximum: 70 }
   

@@ -4,7 +4,7 @@
       <h1>
         There is no love sincerer than the love of food.
       </h1>
-      <p>ひよこChefは創造的なレシピをシェアする主要なネットワークであり、あなたの料理ライフをサポートします。</p>
+      <div class="sub">ひよこChefは創造的なレシピをシェアする主要なネットワークであり、あなたの料理ライフをサポートします。</div>
       <v-btn color="warning" dark large to="/sign_up">新規登録</v-btn>
       <figure><img src="@/assets/images/ひよこex.png" width="480" height="210"></figure>
     </div>
@@ -48,7 +48,7 @@ $sp: 500px;
       }
     }
   }
-  p {
+  .sub {
     font-size: 0.8rem;
     color: black;
   }

@@ -1,0 +1,4 @@
+resources:
+- deployment.yaml
+- rails_config.yaml
+- set_db_job.yaml

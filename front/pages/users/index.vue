@@ -56,11 +56,9 @@ export default {
   },
   mounted() {
     this.$axios.$get(url).then((res) => {
-      console.log(res);
       for (let i in res.data) {
         this.lists.push(res.data[i].attributes);
       };
-      console.log(this.lists);
       this.length = Math.ceil(this.lists.length/this.pageSize);
       this.users = this.lists.slice(this.pageSize*(this.page -1), this.pageSize*(this.page));
     }).catch((error) => {
@@ -78,7 +76,7 @@ export default {
       }).then((res) => {
         this.lists = [];
         for (let i in res.data) {
-          this.lists.push(res.data[i].attributes)
+          this.lists.push(res.data[i].attributes);
         };
         this.length = Math.ceil(this.lists.length/this.pageSize);
         this.users = this.lists.slice(this.pageSize*(this.page -1), this.pageSize*(this.page));

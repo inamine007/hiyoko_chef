@@ -93,8 +93,10 @@ export default {
       image: '',
       introduction: '',
       google: {
-        url: 'http://localhost:3000/auth/google',
-        redirectUrl: 'http://localhost:8080/oauth/google/callback'
+        // url: 'http://localhost:3000/auth/google',
+        // redirectUrl: 'http://localhost:8080/oauth/google/callback'
+        url: 'https://back.hiyoko-chef.com:443/auth/google',
+        redirectUrl: 'https://hiyoko-chef.com/oauth/google/callback'
       },
       required: value => !!value || '必ず入力してください',
       name_length: value => value.length <= 20 || '20文字以内で入力してください',
@@ -106,38 +108,36 @@ export default {
       this.image = event.target.files[0];
     },
     async signUp() {
-      let formData = new FormData()
-      formData.append('user[name]', this.name)
-      formData.append('user[email]', this.email)
-      formData.append('user[password]', this.password)
-      formData.append('user[password_confirmation]', this.password_confirmation)
-      formData.append('user[introduction]', this.introduction)
+      let formData = new FormData();
+      formData.append('user[name]', this.name);
+      formData.append('user[email]', this.email);
+      formData.append('user[password]', this.password);
+      formData.append('user[password_confirmation]', this.password_confirmation);
+      formData.append('user[introduction]', this.introduction);
       if (this.image) {
-        formData.append('user[image]', this.image)
-      }
+        formData.append('user[image]', this.image);
+      };
       await this.$axios.$post(url, formData).then((res) => {
-        console.log(res);
         this.$auth.loginWith('local', {
           data: {
             email: this.email,
             password: this.password
           }
           }).then((res) => {
-            console.log(res);
-            this.$toasted.success('登録完了しました！お気に入りのレシピを探してフォローしよう！')
+            this.$toasted.success('登録完了しました！お気に入りのレシピを探してフォローしよう！');
             this.$router.replace({path: '/'});
           }).catch((error) => {
             console.log(error);
-            this.$toasted.error('登録できませんでした')
+            this.$toasted.error('登録できませんでした');
             return error
         });
       })
     }
   },
   computed: {
-      googleLoginURL() {
-        return `${ this.google.url }?auth_origin_url=${ encodeURI(this.google.redirectUrl) }`
-      }
+    googleLoginURL() {
+      return `${ this.google.url }?auth_origin_url=${ encodeURI(this.google.redirectUrl) }`
     }
+  }
 }
 </script>

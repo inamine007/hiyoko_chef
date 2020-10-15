@@ -17,14 +17,14 @@ class UsersController < ApplicationController
     render json: { status: 'SUCCESS', data: user }
   end
 
-  def whoami
-    user = current_user.as_json
-    if current_user.image.present?
-      img = current_user.image
-      user['encode_image'] = encode_base64(img)
-    end
-    render json: { status: 'SUCCESS', data: user }
-  end
+  # def whoami
+  #   user = current_user.as_json
+  #   if current_user.image.present?
+  #     img = current_user.image
+  #     user['encode_image'] = encode_base64(img)
+  #   end
+  #   render json: { status: 'SUCCESS', data: user }
+  # end
 
   def followings
     followings = @user.followings.all

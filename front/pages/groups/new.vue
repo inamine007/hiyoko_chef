@@ -66,23 +66,22 @@ export default {
     async createGroup() {
       await this.$axios.$post(url, this.form)
       .then((res) => {
-        console.log(res);
         if (res.status == 'ERROR') {
           var messages = [];
           for (var i=0; i<res.data.length; i++){
             messages.push(res.data[i]);
-          }
-          var result = messages.join('<br>')
-          this.$toasted.error(result)
+          };
+          var result = messages.join('<br>');
+          this.$toasted.error(result);
         } else {
-            this.$router.replace({path: '/groups/'});
-            this.$toasted.success(this.form.name + 'を作成しました！');
-        }
+          this.$router.replace({path: '/groups/'});
+          this.$toasted.success(this.form.name + 'を作成しました！');
+        };
       }).catch((error) => {
         console.log(error);
         this.$toasted.error('作成できませんでした');
         return error
-      })
+      });
     }
   }
 }

@@ -53,12 +53,9 @@ export default {
   mounted() {
     let url = `/users/${this.id}/followers`
     this.$axios.$get(url).then((res) => {
-      console.log(res);
       for (let i in res.data) {
-        // this.list.push(res.data[i].id);
         this.lists.push(res.data[i].attributes);
       };
-      console.log(this.lists);
       this.length = Math.ceil(this.lists.length/this.pageSize);
       this.followers = this.lists.slice(this.pageSize*(this.page -1), this.pageSize*(this.page));
     }).catch((error) => {
