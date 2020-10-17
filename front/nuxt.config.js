@@ -76,9 +76,9 @@ export default {
     // baseURL: process.env.DEV_BASE_URL,
     baseURL: process.env.PRD_BASE_URL
   },
-  proxy: {
-    '/api/': { target: 'http://back:3000', pathRewrite: { '^/api/': '/' } }
-  },
+  // proxy: {
+  //   '/api/': { target: 'http://back:3000', pathRewrite: { '^/api/': '/' } }
+  // },
   auth: {
     redirect: {
       login: '/login',

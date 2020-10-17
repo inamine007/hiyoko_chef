@@ -109,7 +109,6 @@ export default {
     let url_g = `/groups/${this.id}/owner`
     let url_r = `/recipes/${this.id}/user`
     this.$axios.$get(url_g).then((res) => {
-      console.log(res);
       this.groups = res.data;
     }).catch((error) => {
       console.log(error);

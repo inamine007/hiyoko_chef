@@ -94,9 +94,9 @@ export default {
       introduction: '',
       google: {
         // url: 'http://localhost:3000/auth/google',
-        // redirectUrl: 'http://localhost:8080/oauth/google/callback'
+        // redirectUrl: 'http://localhost:8080/omniauth/google/callback'
         url: 'https://back.hiyoko-chef.com:443/auth/google',
-        redirectUrl: 'https://hiyoko-chef.com/oauth/google/callback'
+        redirectUrl: 'https://hiyoko-chef.com:443/omniauth/google/callback'
       },
       required: value => !!value || '必ず入力してください',
       name_length: value => value.length <= 20 || '20文字以内で入力してください',

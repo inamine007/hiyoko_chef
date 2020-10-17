@@ -51,6 +51,7 @@ $sp: 500px;
   .sub {
     font-size: 0.8rem;
     color: black;
+    margin-bottom: 5px;
   }
 }
 </style>

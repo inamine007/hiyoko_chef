@@ -52,9 +52,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(ri, index) in recipe.ingredients" :key="index">
-                  <td>{{ ri.name }}</td>
-                  <td>{{ amounts[index] }}{{ ri.unit_used }}</td>
+                <tr v-for="(item, index) in details" :key="index">
+                  <td>{{ item.attributes.ingredient.name }}</td>
+                  <td>{{ item.attributes.amount }}{{ item.attributes.ingredient.unit_used }}</td>
                 </tr>
               </tbody>
             </v-simple-table>
@@ -108,7 +108,7 @@
               <v-img v-if="selectedImageUrl" :src="selectedImageUrl" max-width="300" max-height="300"></v-img>
               </v-row>
               <v-file-input
-                accept="image/*, video/*"
+                accept="image/*"
                 label="画像または動画"
                 name="image"
                 @change="onUpload()"
@@ -144,11 +144,11 @@
               <v-divider class="mt-3"></v-divider>
               <v-card-title>材料</v-card-title>
               <v-card-subtitle>※変更する時は仕入れ先から選択しなおしてください。</v-card-subtitle>
-              <div v-for="(ri, index) in recipe.ingredients" :key="index">
+              <div v-for="(ri, index) in details" :key="index">
                 <v-row>
                   <v-col cols="12" sm="4">
                     <v-select
-                      v-model="ri.trader"
+                      v-model="ri.attributes.ingredient.trader"
                       label="仕入れ先または店名"
                       name="trader"
                       :items="ingredients"
@@ -159,8 +159,8 @@
                   </v-col>
                   <v-col cols="12" sm="4">
                     <v-text-field
-                      v-if="!ri.fil"
-                      v-model="ri.name"
+                      v-if="!ri.attributes.fil"
+                      v-model="ri.attributes.ingredient.name"
                       label="食材名"
                       name="ingredient_name"
                       :dense="true"
@@ -169,8 +169,8 @@
                   </v-col>
                   <v-col cols="8" sm="2">
                     <v-text-field
-                      v-if="!ri.fil"
-                      v-model.number="amounts[index]"
+                      v-if="!ri.attributes.fil"
+                      v-model.number="ri.attributes.amount"
                       label="使用量"
                       name="amount"
                       type="number"
@@ -182,8 +182,8 @@
                   </v-col>
                   <v-col cols="4" sm="2">
                     <v-text-field
-                      v-if="!ri.fil"
-                      v-model="ri.unit_used"
+                      v-if="!ri.attributes.fil"
+                      v-model="ri.attributes.ingredient.unit_used"
                       label="使用単位"
                       :readonly="true"
                       :dense="true"
@@ -191,11 +191,11 @@
                   </v-col>
                   <v-col cols="12" sm="4">
                     <v-select
-                      v-if="ri.fil"
-                      v-model.number="ri.fil.id"
+                      v-if="ri.attributes.fil"
+                      v-model.number="ri.attributes.fil.id"
                       label="食材名"
                       name="ingredient_name"
-                      :items="Array.from(ri.fil)"
+                      :items="Array.from(ri.attributes.fil)"
                       item-text="name"
                       item-value="id"
                       type="number"
@@ -205,8 +205,8 @@
                   </v-col>
                   <v-col cols="8" sm="2">
                     <v-text-field
-                      v-if="ri.fil"
-                      v-model.number="ri.amount"
+                      v-if="ri.attributes.fil"
+                      v-model.number="ri.attributes.amount"
                       label="使用量"
                       name="amount"
                       type="number"
@@ -217,8 +217,8 @@
                   </v-col>
                   <v-col cols="4" sm="2">
                     <v-text-field
-                      v-if="ri.fil"
-                      v-model="ri.unit_used"
+                      v-if="ri.attributes.fil"
+                      v-model="ri.attributes.ingredient.unit_used"
                       label="使用単位"
                       :readonly="true"
                       :dense="true"
@@ -246,7 +246,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="green darken-1" text type="submit">更新</v-btn>
-                <v-btn color="green darken-1" text @click="editDialog=false, setID=setAmount=amounts=[]">キャンセル</v-btn>
+                <v-btn color="green darken-1" text @click="editDialog=false, details=setID=setAmount=[]">キャンセル</v-btn>
               </v-card-actions>
             </v-form>
           </v-card-text>
@@ -313,6 +313,7 @@ export default {
       categories: [],
       groups: [],
       amounts: [],
+      details: {},
       recipe: {
         name: '',
         time: '',
@@ -333,16 +334,8 @@ export default {
             cost_used: '',
             user_id: '',
             amount: [],
-            fil: {
-              id: '',
-              name: ''
-            }
           }
         ],
-        detail: [{
-          amount: [],
-          ingredient_id: ''
-        }],
         category: [{
           name: ''
         }]
@@ -376,11 +369,16 @@ export default {
     onClickEvent(data) {
       this.showDialog = true,
       this.$axios.$get(url + data.id).then((res) => {
-        this.recipe = res.data;
-        this.showImageUrl = res.data.encode_image
-        for (let i in this.recipe.detail) {
-          this.amounts.push(this.recipe.detail[i].amount)
-        };
+        this.recipe = res.data.attributes;
+        this.showImageUrl = res.data.attributes.image
+      }).catch((error) => {
+        console.log(error);
+      });
+      this.$axios.$get(url + data.id + '/ingredients').then((res) => {
+        // for (let i in res.data) {
+        //   this.details.push(res.data[i].attributes)
+        // };
+        this.details = res.data;
       }).catch((error) => {
         console.log(error);
       });
@@ -408,17 +406,25 @@ export default {
       this.editID = item.id;
       this.editName = item.name;
       this.$axios.$get(url + item.id).then((res) => {
-        this.recipe = res.data;
-        this.selectedImageUrl = res.data.encode_image;
-        for (let i in this.recipe.detail) {
-          this.amounts.push(this.recipe.detail[i].amount);
+        this.recipe = res.data.attributes;
+        this.selectedImageUrl = res.data.attributes.image;
+        this.recipe.image = '';
+        this.$axios.$get(url + item.id + '/ingredients').then((res) => {
+        // for (let i in res.data) {
+        //   this.details.push(res.data[i].attributes)
+        // };
+        for (let i in res.data) {
+          this.setAmount.push(res.data[i].attributes.amount);
         };
-        for (let i in this.recipe.detail) {
-          this.setAmount.push(this.recipe.detail[i].amount);
+        for (let i in res.data) {
+          this.setID.push(res.data[i].attributes.ingredient.id);
         };
-        for (let i in this.recipe.ingredients) {
-          this.setID.push(this.recipe.ingredients[i].id);
-        };
+        this.details = res.data;
+        console.log(this.setID)
+        console.log(this.setAmount)
+      }).catch((error) => {
+        console.log(error);
+      });
       }).catch((error) => {
         console.log(error)
       });
@@ -432,38 +438,38 @@ export default {
       });
     },
     setI(ri, index) {
-      this.setID.splice(index, 1, ri.fil.id);
-      ri.unit_used = this.ingredients.find(item => item.id === ri.fil.id).unit_used;
+      this.setID.splice(index, 1, ri.attributes.fil.id);
+      ri.attributes.ingredient.unit_used = this.ingredients.find(item => item.id === ri.attributes.fil.id).unit_used;
+      console.log(this.setID)
     },
     setA(ri, index) {
-      this.setAmount.splice(index, 1, ri.amount);
+      this.setAmount.splice(index, 1, ri.attributes.amount);
+      console.log(this.setAmount)
     },
     selected(ri) {
-      ri.fil = this.ingredients.filter(item => item.trader === ri.trader);
+      ri.attributes.fil = this.ingredients.filter(item => item.trader === ri.attributes.ingredient.trader);
+      ri.attributes.amount = '';
+      ri.attributes.ingredient.unit_used = '';
     },
     addItems() {
-      this.recipe.ingredients.push(this.independentObejct());
+      this.details.push(this.independentObejct());
     },
     removeItems(target) {
-      this.recipe.ingredients.splice(target, 1);
-      this.amounts.splice(target, 1);
+      this.details.splice(target, 1);
       this.setID.splice(target, 1);
       this.setAmount.splice(target, 1);
     },
     independentObejct () {
       return {
-        id: '',
+        attributes: {
+        amount: '',
+        ingredient: {
+          id: '',
           name: '',
           trader: '',
-          unit: '',
           unit_used: '',
-          cost: '',
-          budomari: '',
-          converted_number: '',
-          cost_used: '',
-          fil: {
-            id: ''
         }
+      }
       }
     },
     editRecipe(editID, editName) {

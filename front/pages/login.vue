@@ -53,7 +53,7 @@ export default {
         // url: 'http://localhost:3000/auth/google',
         // redirectUrl: 'http://localhost:8080/oauth/google/callback'
         url: 'https://back.hiyoko-chef.com:443/auth/google',
-        redirectUrl: 'https://hiyoko-chef.com/oauth/google/callback'
+        redirectUrl: 'https://hiyoko-chef.com:443/omniauth/google/callback'
       }
     }
   },

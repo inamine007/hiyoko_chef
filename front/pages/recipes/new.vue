@@ -266,8 +266,6 @@ export default {
       this.cols.splice(target, 1);
       this.setID.splice(target, 1);
       this.setAmount.splice(target, 1);
-      console.log(this.setID);
-      console.log(this.setAmount);
     },
     independentObejct () {
       return {
