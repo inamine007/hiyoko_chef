@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-    before_action :set_recipe, only: [:show, :comments, :update, :destroy]
+    before_action :set_recipe, only: [:show, :comments, :ingredients, :update, :destroy]
     before_action :authenticate_user!
 
   def index
@@ -29,17 +29,12 @@ class RecipesController < ApplicationController
   end
 
   def show
-    recipe = @recipe.as_json
-    recipe['ingredients'] = @recipe.ingredients
-    recipe['detail'] = @recipe.ingredient_recipes
-    recipe['category'] = @recipe.categories.first
-    recipe['uname'] = @recipe.user.name
-    recipe['created'] = @recipe.created_at.strftime("%Y-%m-%d %H:%M")
-    img = @recipe.image
-    uimg = @recipe.user.image
-    recipe['encode_image'] = encode_base64(img) if img.present?
-    recipe['encode_uimage'] = encode_base64(uimg) if uimg.present?
-    render json: { status: 'SUCCESS', message: 'loaded recipes', data: recipe }
+    render json: @recipe, serializer: RecipeSerializer
+  end
+
+  def ingredients
+    ingredients = @recipe.ingredient_recipes
+    render json: ingredients, each_serializer: IngredientRecipeSerializer
   end
 
   def create
@@ -81,11 +76,5 @@ class RecipesController < ApplicationController
 
   def category_params
     params.permit(:category_id)
-  end
-
-  def encode_base64(image_file)
-    image = Base64.encode64(image_file.download)
-    blob = ActiveStorage::Blob.find(image_file[:id])
-    "data:#{blob[:content_type]};base64,#{image}"
   end
 end

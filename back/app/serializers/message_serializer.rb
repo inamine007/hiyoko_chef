@@ -1,5 +1,6 @@
 class MessageSerializer < ActiveModel::Serializer
-  include Rails.application.routes.url_helpers
+  # include Rails.application.routes.url_helpers
+  include CommonModule
   attributes :id, :content, :name, :uid, :image, :created, :updated
 
   def name
@@ -10,8 +11,12 @@ class MessageSerializer < ActiveModel::Serializer
     object.user.id
   end
 
+  # def image
+  #   url_for(object.user.image) if object.user.image.attached?
+  # end
+
   def image
-    url_for(object.user.image) if object.user.image.attached?
+    encode_base64(object.user.image) if object.user.image.attached?
   end
 
   def created

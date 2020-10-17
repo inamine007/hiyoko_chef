@@ -4,7 +4,6 @@ class UsersController < ApplicationController
   def index
     users = User.where('name like ?', "%#{params[:name]}%")
     render json: users, each_serializer: UserSerializer
-    # render json: { status: 'SUCCESS', data: users }
   end
 
   def show
@@ -17,19 +16,18 @@ class UsersController < ApplicationController
     render json: { status: 'SUCCESS', data: user }
   end
 
-  # def whoami
-  #   user = current_user.as_json
-  #   if current_user.image.present?
-  #     img = current_user.image
-  #     user['encode_image'] = encode_base64(img)
-  #   end
-  #   render json: { status: 'SUCCESS', data: user }
-  # end
+  def whoami
+    user = current_user.as_json
+    if current_user.image.present?
+      img = current_user.image
+      user['encode_image'] = encode_base64(img)
+    end
+    render json: { status: 'SUCCESS', data: user }
+  end
 
   def followings
     followings = @user.followings.all
     render json: followings, each_serializer: UserSerializer
-    # render json: { status: 'SUCCESS', data_followings: followings, data_followers: followers }
   end
 
   def followers

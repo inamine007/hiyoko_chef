@@ -1,9 +1,14 @@
 class CommentSerializer < ActiveModel::Serializer
-  include Rails.application.routes.url_helpers
+  # include Rails.application.routes.url_helpers
+  include CommonModule
   attributes :id, :content, :user, :uimage, :cid, :created, :updated
 
+  # def uimage
+  #   url_for(object.user.image) if object.user.image.attached?
+  # end
+
   def uimage
-    url_for(object.user.image) if object.user.image.attached?
+    encode_base64(object.user.image) if object.user.image.attached?
   end
 
   def cid

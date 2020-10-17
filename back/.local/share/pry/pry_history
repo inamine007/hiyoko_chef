@@ -586,3 +586,24 @@ Rails.application.credentials.dig(:aws, :access_key_id)
 exit
 Rails.application.credentials.dig(:aws, :secret_access_key)
 exit
+GOOGLE_KEY
+Rails.application.credentials[:GOOGLE_KEY]
+exit
+Category.all
+exit
+r = Recipe.find(70)
+r = Recipe.find(50)
+r = Recipe.find(130)
+r = Recipe.first
+r.ingredient_recipe
+r.ingredient_recipes
+exit
+r = Recipe.first
+r.ingredients
+exit
+i = Ingredient.first
+i.ingredient_recipes
+exit
+r = Recipe.first
+ir = r.ingredient_recipes
+exit
