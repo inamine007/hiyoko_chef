@@ -25,6 +25,7 @@ https://hiyoko-chef.com
 - Route53
 
 # インフラ構成図
+![インフラ構成図 (3)](https://user-images.githubusercontent.com/60652558/96624776-2ee0f580-1348-11eb-9d94-185faa15500c.png)
 
 # ER図
 
