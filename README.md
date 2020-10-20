@@ -3,7 +3,7 @@
 食材の登録から細かく設定ができ、その食材を元に簡単にレシピが作成できます。レシピの原価も計算してくれます。
 作成したレシピは非公開、公開、または特定の範囲だけに公開することが可能です。
 https://hiyoko-chef.com
-ゲストログイン email: test@example.com、　password: 111111
+ゲストログイン email: test3@example.com　password: 111111
 <img width="1434" alt="ひよこトップ" src="https://user-images.githubusercontent.com/60652558/96622113-7ebdbd80-1344-11eb-97b5-34e573e4bc1c.png">
 
 # デモ
