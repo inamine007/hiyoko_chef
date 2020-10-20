@@ -16,8 +16,7 @@
           <div class="text mt-5">公開レシピ</div>
         </v-row>
         <v-row dense>
-          <div v-if="recipes.length === 0" class="nothing">公開レシピはありません</div>
-          <v-col v-else v-for="recipe in recipes" :key="recipe.id" md="6" xs="12">
+          <v-col v-for="recipe in recipes" :key="recipe.id" md="6" xs="12">
             <v-card outlined max-width="320" class="mx-auto" link :to="{ name: 'recipes-id', params: { id: recipe.rid } }">
               <v-img :src='recipe.image' height="320"></v-img>
               <v-row>

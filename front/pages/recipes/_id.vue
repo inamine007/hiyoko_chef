@@ -4,16 +4,16 @@
       <v-col cols="12" sm="8" md="8">
         <v-card class="mx-auto">
           <v-card-title>
-            <nuxt-link :to="{ name: 'users-id-chart', params: { id: recipe.user_id } }">
+            <nuxt-link :to="{ name: 'users-id-chart', params: { id: recipe.uid } }">
             <v-avatar size='34' class="mr-2">
-              <v-img v-if="recipe.encode_uimage" :src="recipe.encode_uimage"></v-img>
+              <v-img v-if="recipe.uimage" :src="recipe.uimage"></v-img>
             </v-avatar>
             {{ recipe.uname }}
             </nuxt-link>
           </v-card-title>
           <v-img
-            v-if="recipe.encode_image" 
-            :src="recipe.encode_image"
+            v-if="recipe.image" 
+            :src="recipe.image"
             max-width="960"
             max-height="680"
           ></v-img>
@@ -45,9 +45,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(ri, index) in recipe.ingredients" :key="index">
-                  <td>{{ ri.name }}</td>
-                  <td>{{ amounts[index] }}{{ ri.unit_used }}</td>
+                <tr v-for="(item, index) in details" :key="index">
+                  <td>{{ item.attributes.ingredient.name }}</td>
+                  <td>{{ item.attributes.amount }}{{ item.attributes.ingredient.unit_used }}</td>
                 </tr>
               </tbody>
             </v-simple-table>
@@ -170,7 +170,7 @@ export default {
           name: ''
         }]
       },
-      amounts: [],
+      details: {},
       pageComment: 1,
       lengthC: 0,
       pageSizeC: 7,
@@ -186,10 +186,12 @@ export default {
   mounted() {
     let url = `recipes/${this.id}/`;
     this.$axios.$get(url).then((res) => {
-      this.recipe = res.data;
-      for (let i in this.recipe.detail) {
-        this.amounts.push(this.recipe.detail[i].amount)
-      };
+      this.recipe = res.data.attributes;
+    }).catch((error) => {
+      console.log(error);
+    });
+    this.$axios.$get(url + 'ingredients').then((res) => {
+      this.details = res.data;
     }).catch((error) => {
       console.log(error);
     });

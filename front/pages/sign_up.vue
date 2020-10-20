@@ -36,6 +36,8 @@
                 prepend-icon="mdi-lock"
                 type="password"
                 :rules="[required]"
+                hint="※6文字以上の半角英数字"
+                persistent-hint
               ></v-text-field>
               <v-text-field
                 v-model="password_confirmation"

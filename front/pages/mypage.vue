@@ -16,7 +16,7 @@
         </v-row>
         <v-row dense>
           <v-col v-for="recipe in recipes" :key="recipe.id" md="6" xs="12">
-            <v-card outlined max-width="320" class="mx-auto">
+            <v-card outlined max-width="320" class="mx-auto" link :to="{ name: 'recipes-id', params: { id: recipe.rid } }">
               <v-img :src='recipe.image' height="320"></v-img>
               <v-row>
                 <v-col cols="7" class="pa-0">

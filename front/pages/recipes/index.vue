@@ -375,9 +375,6 @@ export default {
         console.log(error);
       });
       this.$axios.$get(url + data.id + '/ingredients').then((res) => {
-        // for (let i in res.data) {
-        //   this.details.push(res.data[i].attributes)
-        // };
         this.details = res.data;
       }).catch((error) => {
         console.log(error);
@@ -410,9 +407,6 @@ export default {
         this.selectedImageUrl = res.data.attributes.image;
         this.recipe.image = '';
         this.$axios.$get(url + item.id + '/ingredients').then((res) => {
-        // for (let i in res.data) {
-        //   this.details.push(res.data[i].attributes)
-        // };
         for (let i in res.data) {
           this.setAmount.push(res.data[i].attributes.amount);
         };

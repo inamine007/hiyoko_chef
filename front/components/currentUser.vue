@@ -70,7 +70,7 @@
             ></v-file-input>
             <v-textarea
               v-model="user.introduction"
-              label="説明文"
+              label="自己紹介"
               name="introduction"
               counter="70"
               rows="3"

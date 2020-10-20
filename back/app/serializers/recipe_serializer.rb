@@ -1,7 +1,7 @@
 class RecipeSerializer < ActiveModel::Serializer
   # include Rails.application.routes.url_helpers
   include CommonModule
-  attributes :id, :rid, :name, :description, :cost, :time, :serve, :status, :category, :group_id, :image, :uname, :uimage, :favorites, :comments,
+  attributes :id, :rid, :uid, :name, :description, :cost, :time, :serve, :status, :category, :group_id, :image, :uname, :uimage, :favorites, :comments,
   :created, :updated
 
   # def image
@@ -14,6 +14,10 @@ class RecipeSerializer < ActiveModel::Serializer
 
   def uname
     object.user.name
+  end
+
+  def uid
+    object.user.id
   end
 
   # def uimage
