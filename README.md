@@ -21,6 +21,7 @@ https://hiyoko-chef.com
 - VPC
 - EC2
 - EKS
+- CloudFront
 - RDS
 - Route53
 
@@ -40,5 +41,5 @@ https://hiyoko-chef.com
 - 検索
 
 # テスト
-- Rspec
-* 機能テスト(request)
+#### Rspec
+- 機能テスト(request)
