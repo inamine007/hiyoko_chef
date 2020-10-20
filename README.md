@@ -15,14 +15,14 @@ https://hiyoko-chef.com
 - Vue.js 2.6.12
 - Nuxt.js 2.14.4
 - PostgreSQL
-- AWS
-* VPC
-* EC2
-* EKS
-* RDS
-* Route53
 - Docker/Docker-compose
 - Rspec
+#### AWS
+- VPC
+- EC2
+- EKS
+- RDS
+- Route53
 
 # インフラ構成図
 
