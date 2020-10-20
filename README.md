@@ -28,6 +28,7 @@ https://hiyoko-chef.com
 ![インフラ構成図 (3)](https://user-images.githubusercontent.com/60652558/96624776-2ee0f580-1348-11eb-9d94-185faa15500c.png)
 
 # ER図
+![ER図 (3)](https://user-images.githubusercontent.com/60652558/96624831-4ae49700-1348-11eb-9a93-d23828826ffa.png)
 
 # 機能一覧
 - ユーザー登録、ログイン、Googleソーシャルログイン(devise_token_auth,google_oauth2)
